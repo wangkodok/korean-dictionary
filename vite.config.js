@@ -5,7 +5,10 @@ import react from "@vitejs/plugin-react-swc";
 export default defineConfig({
   server: {
     proxy: {
-      "/api": "https://stdict.korean.go.kr",
+      "/api": {
+        target: "https://stdict.korean.go.kr",
+        changeOrigin: true,
+      },
     },
   },
   plugins: [react()],
