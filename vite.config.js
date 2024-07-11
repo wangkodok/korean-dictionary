@@ -11,5 +11,11 @@ export default defineConfig({
       },
     },
   },
+  rewrites: [
+    {
+      source: "/api/(.*)",
+      destination: "https://korean-dictionary-three.vercel.app/",
+    },
+  ],
   plugins: [react()],
 });
