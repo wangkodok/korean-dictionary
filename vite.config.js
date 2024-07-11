@@ -8,6 +8,7 @@ export default defineConfig({
       "/api": {
         target: "https://stdict.korean.go.kr",
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },
