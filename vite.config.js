@@ -13,8 +13,8 @@ export default defineConfig({
   },
   rewrites: [
     {
-      source: "/api/(.*)",
-      destination: "https://korean-dictionary-three.vercel.app/",
+      source: "/api/:path*/",
+      destination: "https://stdict.korean.go.kr/:path*/",
     },
   ],
   plugins: [react()],
