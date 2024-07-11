@@ -43,7 +43,7 @@ export default function Search() {
 
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="flex">
+      <div className="lg:flex">
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             className="space-y-6"
@@ -87,7 +87,7 @@ export default function Search() {
             </div>
           </form>
 
-          <div className="mt-6 border-t border-gray-100">
+          <div className="mt-6">
             {searchResult.channel === undefined
               ? null
               : searchResult.channel.item.map((data, index) => {
