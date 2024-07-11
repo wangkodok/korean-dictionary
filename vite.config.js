@@ -14,7 +14,7 @@ export default defineConfig({
   rewrites: [
     {
       source: "/api/:path*/",
-      destination: "https://stdict.korean.go.kr/:path*/",
+      destination: "https://korean-dictionary-three.vercel.app/:path*/",
     },
   ],
   plugins: [react()],
