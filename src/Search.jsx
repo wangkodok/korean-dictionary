@@ -26,7 +26,9 @@ export default function Search() {
 
       async function fetchData() {
         const { data } = await axios.get(
-          `/api/search.do?certkey_no=6692&key=0D517DC9B6391075F0D67AB963CAF077&type_search=search&req_type=json&q=${searchWord}`
+          `/api/search.do?certkey_no=6692&key=${
+            import.meta.env.VITE_API_KEY
+          }&type_search=search&req_type=json&q=${searchWord}`
         );
 
         setSearchResult(() => {
