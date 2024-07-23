@@ -1,11 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { CiSearch } from "react-icons/ci";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Search() {
   const [searchWord, setSearchWord] = useState("");
   const [searchResult, setSearchResult] = useState("");
   const [searchHandler, setSearchHandler] = useState(false);
-  const [saveWord, setSaveWord] = useState([]);
+  // const [saveWord, setSaveWord] = useState([]);
+
+  const dispatch = useDispatch();
+
+  function handleSaveWord(data) {
+    dispatch({ type: "word-save", word: data });
+  }
+
+  const saveWord = useSelector((state) => {
+    return state.wordSave;
+  });
+
+  useEffect(() => {
+    if (saveWord.length === 0) {
+      dispatch({ type: "side-toggle", toggle: false });
+    }
+  }, [dispatch, saveWord]);
 
   function Input(e) {
     setSearchWord(() => {
@@ -13,12 +31,12 @@ export default function Search() {
     });
   }
 
-  function handleSaveWord(data) {
-    console.log(data);
-    setSaveWord((newWord) => {
-      return [...newWord, data];
-    });
-  }
+  // function handleSaveWord(data) {
+  //   console.log(data);
+  //   setSaveWord((newWord) => {
+  //     return [...newWord, data];
+  //   });
+  // }
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -26,7 +44,9 @@ export default function Search() {
 
       async function fetchData() {
         const { data } = await axios.get(
-          `/api/search.do?certkey_no=6692&key=0D517DC9B6391075F0D67AB963CAF077&type_search=search&req_type=json&q=${searchWord}`
+          `/api/search.do?certkey_no=6715&key=${
+            import.meta.env.VITE_API_KEY
+          }&type_search=search&req_type=json&q=${searchWord}`
         );
 
         setSearchResult(() => {
@@ -42,102 +62,80 @@ export default function Search() {
   }, [searchWord]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="lg:flex">
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="space-y-6"
-            action="#"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <div>
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium leading-6 text-gray-900"
-              >
-                국립국어원 표준국어대사전 찾기
-              </label>
-              <div className="mt-2">
-                <input
-                  id="text"
-                  name="text"
-                  type="text"
-                  autoComplete="text"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  value={searchWord}
-                  onChange={Input}
-                />
-              </div>
+    <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
+      <div className="rounded-xl">
+        <form
+          className="bg-slate-100 shadow-lg shadow-slate-300/50 rounded-xl"
+          action="#"
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <label htmlFor="text" className="block text-center text-[1.25rem]">
+            {/* 국립국어원 표준국어대사전 찾기 */}
+          </label>
+          <div className="relative items-center bg-white border-[0.0625rem] rounded-xl py-5 pl-[56px] pr-[124px]">
+            <CiSearch
+              size="32"
+              className="absolute left-[12px] top-[50%] translate-y-[-50%]"
+            />
+            <div className="flex w-full">
+              <input
+                id="text"
+                name="text"
+                type="text"
+                autoComplete="text"
+                required
+                className="w-full"
+                value={searchWord}
+                placeholder="단어를 입력하세요."
+                onChange={Input}
+              />
             </div>
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={() => {
-                  setSearchHandler(() => {
-                    return true;
-                  });
-                }}
-              >
-                검색
-              </button>
-            </div>
-          </form>
+            <button
+              type="submit"
+              className="absolute right-[12px] top-[50%] translate-y-[-50%] block w-[100px] h-[48px] bg-slate-100 rounded-xl"
+              onClick={() => {
+                setSearchHandler(() => {
+                  return true;
+                });
+              }}
+            >
+              검색
+            </button>
+          </div>
+        </form>
 
-          <div className="mt-6">
-            {searchResult.channel === undefined
-              ? null
-              : searchResult.channel.item.map((data, index) => {
-                  if (searchHandler === true) {
-                    return (
-                      <dl className="divide-y divide-gray-100" key={index}>
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                          <dt className="text-sm font-medium leading-6 text-gray-900">
-                            <strong>{data.word}</strong>
-                            <br />
-                            <button
-                              className="pointer-events-auto rounded-md bg-indigo-600 px-3 py-2 text-[0.8125rem] font-semibold leading-5 text-white hover:bg-indigo-500"
-                              onClick={() => {
-                                return handleSaveWord(data);
-                              }}
-                            >
-                              단어 저장
-                            </button>
-                          </dt>
-                          <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {data.sense.definition}
-                          </dd>
-                        </div>
-                      </dl>
-                    );
-                  }
-                })}
-          </div>
-        </div>
-        {saveWord.length === 0 ? null : (
-          <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <div className="m-8">
-              <p className="mb-8">단어 저장 목록</p>
-              <ul>
-                {saveWord.map((data, index) => {
+        <div className="mt-[4rem]">
+          {searchResult.channel === undefined
+            ? null
+            : searchResult.channel.item.map((data, index) => {
+                if (searchHandler === true) {
                   return (
-                    <li key={index} className="mb-4">
-                      <dl>
-                        <dt>
+                    <dl
+                      className="relative py-8 border-b-[.0625rem]"
+                      key={index}
+                    >
+                      <div className="pr-0 mb-6 sm:pr-[10rem] sm:mb-0">
+                        <dt className="text-xl mb-2">
                           <strong>{data.word}</strong>
+                          {/* <br /> */}
                         </dt>
-                        <dd>{data.sense.definition}</dd>
-                      </dl>
-                    </li>
+                        <dd className="">{data.sense.definition}</dd>
+                      </div>
+                      <button
+                        className="static translate-y-0 w-[100px] h-[48px] bg-slate-100 rounded-xl sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
+                        onClick={() => {
+                          return handleSaveWord(data);
+                        }}
+                      >
+                        단어 저장
+                      </button>
+                    </dl>
                   );
-                })}
-              </ul>
-            </div>
-          </div>
-        )}
+                }
+              })}
+        </div>
       </div>
     </div>
   );
