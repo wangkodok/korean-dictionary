@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function Search() {
   const [searchWord, setSearchWord] = useState("");
+  const [debouncedWord, setDebouncedWord] = useState(searchWord);
   const [searchResult, setSearchResult] = useState("");
   const [searchHandler, setSearchHandler] = useState(false);
   // const [saveWord, setSaveWord] = useState([]);
@@ -39,27 +40,34 @@ export default function Search() {
   // }
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (searchWord === "") return;
-
-      async function fetchData() {
-        const { data } = await axios.get(
-          `/api/search.do?certkey_no=6715&key=${
-            import.meta.env.VITE_API_KEY
-          }&type_search=search&req_type=json&q=${searchWord}`
-        );
-
-        setSearchResult(() => {
-          return data;
-        });
-        setSearchHandler(() => {
-          return false;
-        });
-      }
-      fetchData();
+    const timeout = setTimeout(() => {
+      setDebouncedWord(searchWord);
     }, 1000);
-    return () => clearTimeout(delayDebounceFn);
+    return () => clearTimeout(timeout);
   }, [searchWord]);
+
+  useEffect(() => {
+    if (debouncedWord === "") return;
+
+    async function fetchData() {
+      const { data } = await axios.get(
+        `/api/search.do?certkey_no=6715&key=${
+          import.meta.env.VITE_API_KEY
+        }&type_search=search&req_type=json&q=${debouncedWord}`
+      );
+
+      setSearchResult(() => {
+        return data;
+      });
+      setSearchHandler(() => {
+        return false;
+      });
+    }
+    fetchData();
+    // const delayDebounceFn = setTimeout(() => {
+    // }, 1000);
+    // return () => clearTimeout(delayDebounceFn);
+  }, [debouncedWord]);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
