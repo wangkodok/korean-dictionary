@@ -53,7 +53,13 @@ export default function Search() {
       const { data } = await axios.get(
         `/api/search.do?certkey_no=6715&key=${
           import.meta.env.VITE_API_KEY
-        }&type_search=search&req_type=json&q=${debouncedWord}`
+        }&type_search=search&req_type=json&q=${debouncedWord}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
       );
 
       setSearchResult(() => {
