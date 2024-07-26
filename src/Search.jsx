@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
+import { GoAlert } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Search() {
@@ -8,6 +9,7 @@ export default function Search() {
   const [debouncedWord, setDebouncedWord] = useState(searchWord);
   const [searchResult, setSearchResult] = useState("");
   const [searchHandler, setSearchHandler] = useState(false);
+  const [error, setError] = useState(false);
   // const [saveWord, setSaveWord] = useState([]);
 
   const dispatch = useDispatch();
@@ -50,24 +52,38 @@ export default function Search() {
     if (debouncedWord === "") return;
 
     async function fetchData() {
-      const { data } = await axios.get(
-        `/api/search.do?certkey_no=6715&key=${
-          import.meta.env.VITE_API_KEY
-        }&type_search=search&req_type=json&q=${debouncedWord}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        }
-      );
+      try {
+        const { data } = await axios.get(
+          `/api/search.do?certkey_no=6715&key=${
+            import.meta.env.VITE_API_KEY
+          }&type_search=search&req_type=json&q=${debouncedWord}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "X-Requested-With": "XMLHttpRequest",
+              // "User-Agent":
+              //   "Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1",
+              // "User-Agent": "xyz-bla-bla",
+              "user-agent":
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36",
+            },
+            proxy: {
+              protocol: "https",
+            },
+          }
+        );
 
-      setSearchResult(() => {
-        return data;
-      });
-      setSearchHandler(() => {
-        return false;
-      });
+        setSearchResult(() => {
+          return data;
+        });
+        setSearchHandler(() => {
+          return false;
+        });
+      } catch (error) {
+        setError(true);
+        console.log(error);
+      }
     }
     fetchData();
     // const delayDebounceFn = setTimeout(() => {
@@ -151,6 +167,23 @@ export default function Search() {
               })}
         </div>
       </div>
+      {error === true ? (
+        <div className="text-center">
+          <GoAlert className="w-full mb-5" size={32} color="#000" />
+          <p className="mb-5">
+            외부 서버에서 데이터를 불러오지 못했습니다. <br /> 아래의 버튼을
+            클릭 후 다시 시도해 주세요.
+          </p>
+          <button
+            className="h-[48px] px-[24px] bg-slate-100 rounded-xl"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            다시 시도하기
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
