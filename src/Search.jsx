@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function Search() {
   const [searchWord, setSearchWord] = useState("");
-  const [debouncedWord, setDebouncedWord] = useState(searchWord);
+  // const [debouncedWord, setDebouncedWord] = useState(searchWord);
   const [searchResult, setSearchResult] = useState("");
-  const [searchHandler, setSearchHandler] = useState(false);
+  // const [searchHandler, setSearchHandler] = useState(false);
+  const [query, setQuery] = useState("");
   const [error, setError] = useState(false);
   // const [saveWord, setSaveWord] = useState([]);
 
@@ -41,30 +42,30 @@ export default function Search() {
   //   });
   // }
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebouncedWord(searchWord);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, [searchWord]);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setDebouncedWord(searchWord);
+  //   }, 1000);
+  //   return () => clearTimeout(timeout);
+  // }, [searchWord]);
 
   useEffect(() => {
-    if (debouncedWord === "") return;
+    if (query === "") return;
 
     async function fetchData() {
       try {
         const response = await fetch(
           `/api/search.do?certkey_no=6715&key=${
             import.meta.env.VITE_API_KEY
-          }&type_search=search&req_type=json&q=${debouncedWord}`
+          }&type_search=search&req_type=json&q=${query}`
         );
         const data = await response.json();
         setSearchResult(() => {
           return data;
         });
-        setSearchHandler(() => {
-          return false;
-        });
+        // setSearchHandler(() => {
+        //   return false;
+        // });
         console.log(data);
       } catch (error) {
         setError(true);
@@ -72,46 +73,7 @@ export default function Search() {
       }
     }
     fetchData();
-
-    // async function fetchData() {
-    //   try {
-    //     const { data } = await axios.get(
-    //       `/api/search.do?certkey_no=6715&key=${
-    //         import.meta.env.VITE_API_KEY
-    //       }&type_search=search&req_type=json&q=${debouncedWord}`,
-    //       {
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           "Access-Control-Allow-Origin": "*",
-    //           "X-Requested-With": "XMLHttpRequest",
-    //           // "User-Agent":
-    //           //   "Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1",
-    //           // "User-Agent": "xyz-bla-bla",
-    //           "user-agent":
-    //             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36",
-    //         },
-    //         proxy: {
-    //           protocol: "https",
-    //         },
-    //       }
-    //     );
-
-    //     setSearchResult(() => {
-    //       return data;
-    //     });
-    //     setSearchHandler(() => {
-    //       return false;
-    //     });
-    //   } catch (error) {
-    //     setError(true);
-    //     console.log(error);
-    //   }
-    // }
-    // fetchData();
-    // const delayDebounceFn = setTimeout(() => {
-    // }, 1000);
-    // return () => clearTimeout(delayDebounceFn);
-  }, [debouncedWord]);
+  }, [query]);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
@@ -148,8 +110,11 @@ export default function Search() {
               type="submit"
               className="absolute right-[12px] top-[50%] translate-y-[-50%] block w-[100px] h-[48px] bg-slate-100 rounded-xl"
               onClick={() => {
-                setSearchHandler(() => {
-                  return true;
+                // setSearchHandler(() => {
+                //   return true;
+                // });
+                setQuery(() => {
+                  return searchWord;
                 });
               }}
             >
@@ -162,30 +127,27 @@ export default function Search() {
           {searchResult.channel === undefined
             ? null
             : searchResult.channel.item.map((data, index) => {
-                if (searchHandler === true) {
-                  return (
-                    <dl
-                      className="relative py-8 border-b-[.0625rem]"
-                      key={index}
+                // if (searchHandler === true) {
+                return (
+                  <dl className="relative py-8 border-b-[.0625rem]" key={index}>
+                    <div className="pr-0 mb-6 sm:pr-[10rem] sm:mb-0">
+                      <dt className="text-xl mb-2">
+                        <strong>{data.word}</strong>
+                        {/* <br /> */}
+                      </dt>
+                      <dd className="">{data.sense.definition}</dd>
+                    </div>
+                    <button
+                      className="static translate-y-0 w-[100px] h-[48px] bg-slate-100 rounded-xl sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
+                      onClick={() => {
+                        return handleSaveWord(data);
+                      }}
                     >
-                      <div className="pr-0 mb-6 sm:pr-[10rem] sm:mb-0">
-                        <dt className="text-xl mb-2">
-                          <strong>{data.word}</strong>
-                          {/* <br /> */}
-                        </dt>
-                        <dd className="">{data.sense.definition}</dd>
-                      </div>
-                      <button
-                        className="static translate-y-0 w-[100px] h-[48px] bg-slate-100 rounded-xl sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
-                        onClick={() => {
-                          return handleSaveWord(data);
-                        }}
-                      >
-                        단어 저장
-                      </button>
-                    </dl>
-                  );
-                }
+                      단어 저장
+                    </button>
+                  </dl>
+                );
+                // }
               })}
         </div>
       </div>
