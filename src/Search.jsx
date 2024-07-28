@@ -119,6 +119,9 @@ export default function Search() {
                 setQuery(() => {
                   return searchWord;
                 });
+                if (searchResult === "목록 없음") {
+                  setSearchResult("");
+                }
               }}
             >
               검색
@@ -170,6 +173,9 @@ export default function Search() {
             다시 시도하기
           </button>
         </div>
+      ) : null}
+      {searchResult === "목록 없음" ? (
+        <p className="mb-5">{query} 단어가 없습니다.</p>
       ) : null}
     </div>
   );
