@@ -59,17 +59,20 @@ export default function Search() {
             import.meta.env.VITE_API_KEY
           }&type_search=search&req_type=json&q=${query}`
         );
-        const data = await response.json();
-        setSearchResult(() => {
-          return data;
-        });
-        // setSearchHandler(() => {
-        //   return false;
-        // });
-        console.log(data);
+        if (response.status >= 500) {
+          setError(true);
+        }
+        if (response.status === 200) {
+          const data = await response.json();
+          setSearchResult(() => {
+            return data;
+          });
+        }
       } catch (error) {
-        setError(true);
-        console.log(error);
+        if (error.message === "Unexpected end of JSON input") {
+          console.log(error.message);
+          setSearchResult("목록 없음");
+        }
       }
     }
     fetchData();
