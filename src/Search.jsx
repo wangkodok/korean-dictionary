@@ -59,17 +59,20 @@ export default function Search() {
             import.meta.env.VITE_API_KEY
           }&type_search=search&req_type=json&q=${query}`
         );
-        const data = await response.json();
-        setSearchResult(() => {
-          return data;
-        });
-        // setSearchHandler(() => {
-        //   return false;
-        // });
-        console.log(data);
+        if (response.status >= 500) {
+          setError(true);
+        }
+        if (response.status === 200) {
+          const data = await response.json();
+          setSearchResult(() => {
+            return data;
+          });
+        }
       } catch (error) {
-        setError(true);
-        console.log(error);
+        if (error.message === "Unexpected end of JSON input") {
+          console.log(error.message);
+          setSearchResult("목록 없음");
+        }
       }
     }
     fetchData();
@@ -116,6 +119,9 @@ export default function Search() {
                 setQuery(() => {
                   return searchWord;
                 });
+                if (searchResult === "목록 없음") {
+                  setSearchResult("");
+                }
               }}
             >
               검색
@@ -167,6 +173,9 @@ export default function Search() {
             다시 시도하기
           </button>
         </div>
+      ) : null}
+      {searchResult === "목록 없음" ? (
+        <p className="mb-5">{query} 단어가 없습니다.</p>
       ) : null}
     </div>
   );
