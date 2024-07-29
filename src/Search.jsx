@@ -57,7 +57,12 @@ export default function Search() {
         const response = await fetch(
           `/api/search.do?certkey_no=6715&key=${
             import.meta.env.VITE_API_KEY
-          }&type_search=search&req_type=json&q=${query}`
+          }&type_search=search&req_type=json&q=${query}`,
+          {
+            headers: {
+              "X-Target-Api": "https://stdict.korean.go.kr", // 헤더를 통해 동적 API URL 전달
+            },
+          }
         );
         if (response.status >= 500) {
           setError(true);
