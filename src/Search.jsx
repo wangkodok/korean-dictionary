@@ -65,6 +65,7 @@ export default function Search() {
           }
         );
         if (response.status >= 500) {
+          setSearchResult("");
           setError(true);
         }
         if (response.status === 200) {
