@@ -72,6 +72,7 @@ export default function Search() {
           setSearchResult(() => {
             return data;
           });
+          setError(false);
         }
       } catch (error) {
         if (error.message === "Unexpected end of JSON input") {
