@@ -12,6 +12,7 @@ export default function Search() {
   const [query, setQuery] = useState("");
   const [error, setError] = useState(false);
   // const [saveWord, setSaveWord] = useState([]);
+  const [noWord, setNoWord] = useState("");
 
   const dispatch = useDispatch();
 
@@ -53,7 +54,10 @@ export default function Search() {
     if (query === "") return;
 
     async function fetchData() {
+      setNoWord("");
+
       try {
+        console.log("try");
         const response = await fetch(
           `/api/search.do?certkey_no=6715&key=${
             import.meta.env.VITE_API_KEY
@@ -68,6 +72,7 @@ export default function Search() {
           setSearchResult("");
           setError(true);
         }
+        console.log("try");
         if (response.status === 200) {
           const data = await response.json();
           setSearchResult(() => {
@@ -75,10 +80,13 @@ export default function Search() {
           });
           setError(false);
         }
+        console.log("try");
       } catch (error) {
         if (error.message === "Unexpected end of JSON input") {
           console.log(error.message);
-          setSearchResult("목록 없음");
+          setNoWord("목록 없음");
+          setSearchResult("");
+          console.log("catch");
         }
       }
     }
@@ -126,7 +134,9 @@ export default function Search() {
                 setQuery(() => {
                   return searchWord;
                 });
-                if (searchResult === "목록 없음") {
+                setNoWord("");
+                if (noWord === "목록 없음") {
+                  setNoWord("목록 없음");
                   setSearchResult("");
                 }
               }}
@@ -181,7 +191,7 @@ export default function Search() {
           </button>
         </div>
       ) : null}
-      {searchResult === "목록 없음" ? (
+      {noWord === "목록 없음" ? (
         <p className="mb-5">{query} 단어가 없습니다.</p>
       ) : null}
     </div>
