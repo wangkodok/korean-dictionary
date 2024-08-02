@@ -58,15 +58,23 @@ export default function Search() {
 
       try {
         console.log("try");
+        // const response = await fetch(
+        //   `/api/search.do?certkey_no=6715&key=${
+        //     import.meta.env.VITE_API_KEY
+        //   }&type_search=search&req_type=json&q=${query}`,
+        //   {
+        //     headers: {
+        //       "X-Target-Api": "https://stdict.korean.go.kr", // 헤더를 통해 동적 API URL 전달
+        //     },
+        //   }
+        // );
         const response = await fetch(
-          `/api/search.do?certkey_no=6715&key=${
-            import.meta.env.VITE_API_KEY
-          }&type_search=search&req_type=json&q=${query}`,
-          {
-            headers: {
-              "X-Target-Api": "https://stdict.korean.go.kr", // 헤더를 통해 동적 API URL 전달
-            },
-          }
+          `https://korean-dictionary-server.onrender.com/fetch-data?query=${query}`,
+          // {
+          //   headers: {
+          //     "X-Target-Api": "https://stdict.korean.go.kr", // 헤더를 통해 동적 API URL 전달
+          //   },
+          // }
         );
         if (response.status >= 500) {
           setSearchResult("");
