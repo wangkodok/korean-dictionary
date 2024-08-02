@@ -69,7 +69,7 @@ export default function Search() {
         //   }
         // );
         const response = await fetch(
-          `https://korean-dictionary-server.onrender.com/fetch-data?query=${query}`,
+          `https://korean-dictionary-server.onrender.com/fetch-data?query=${query}`
           // {
           //   headers: {
           //     "X-Target-Api": "https://stdict.korean.go.kr", // 헤더를 통해 동적 API URL 전달
