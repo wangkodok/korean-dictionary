@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { GoAlert } from "react-icons/go";
+import PulseLoader from "react-spinners/PulseLoader";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Search() {
@@ -13,6 +14,7 @@ export default function Search() {
   const [error, setError] = useState(false);
   // const [saveWord, setSaveWord] = useState([]);
   const [noWord, setNoWord] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -54,6 +56,10 @@ export default function Search() {
     if (query === "") return;
 
     async function fetchData() {
+      // 스피너
+      setLoading(true);
+      setSearchResult("");
+
       setNoWord("");
 
       try {
@@ -69,7 +75,7 @@ export default function Search() {
         //   }
         // );
         const response = await fetch(
-          `https://korean-dictionary-server.onrender.com/fetch-data?query=${query}`,
+          `https://korean-dictionary-server.onrender.com/fetch-data?query=${query}`
           // {
           //   headers: {
           //     "X-Target-Api": "https://stdict.korean.go.kr", // 헤더를 통해 동적 API URL 전달
@@ -89,6 +95,7 @@ export default function Search() {
           setError(false);
         }
         console.log("try");
+        setLoading(false);
       } catch (error) {
         if (error.message === "Unexpected end of JSON input") {
           console.log(error.message);
@@ -154,33 +161,50 @@ export default function Search() {
           </div>
         </form>
 
-        <div className="mt-[4rem]">
-          {searchResult.channel === undefined
-            ? null
-            : searchResult.channel.item.map((data, index) => {
-                // if (searchHandler === true) {
-                return (
-                  <dl className="relative py-8 border-b-[.0625rem]" key={index}>
-                    <div className="pr-0 mb-6 sm:pr-[10rem] sm:mb-0">
-                      <dt className="text-xl mb-2">
-                        <strong>{data.word}</strong>
-                        {/* <br /> */}
-                      </dt>
-                      <dd className="">{data.sense.definition}</dd>
-                    </div>
-                    <button
-                      className="static translate-y-0 w-[100px] h-[48px] bg-slate-100 rounded-xl sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
-                      onClick={() => {
-                        return handleSaveWord(data);
-                      }}
+        {query !== "" && loading === true ? (
+          <div className="mt-[4rem] text-center">
+            <PulseLoader
+              color="#000"
+              loading={loading} // useState로 관리
+              size={8}
+            />
+            <p className="mt-[2rem]">
+              외부 서버에서 데이터를 불러오고 있습니다. <br /> 잠시만
+              기다려주세요.
+            </p>
+          </div>
+        ) : (
+          <div className="mt-[4rem]">
+            {searchResult.channel === undefined
+              ? null
+              : searchResult.channel.item.map((data, index) => {
+                  // if (searchHandler === true) {
+                  return (
+                    <dl
+                      className="relative py-8 border-b-[.0625rem]"
+                      key={index}
                     >
-                      단어 저장
-                    </button>
-                  </dl>
-                );
-                // }
-              })}
-        </div>
+                      <div className="pr-0 mb-6 sm:pr-[10rem] sm:mb-0">
+                        <dt className="text-xl mb-2">
+                          <strong>{data.word}</strong>
+                          {/* <br /> */}
+                        </dt>
+                        <dd className="">{data.sense.definition}</dd>
+                      </div>
+                      <button
+                        className="static translate-y-0 w-[100px] h-[48px] bg-slate-100 rounded-xl sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
+                        onClick={() => {
+                          return handleSaveWord(data);
+                        }}
+                      >
+                        단어 저장
+                      </button>
+                    </dl>
+                  );
+                  // }
+                })}
+          </div>
+        )}
       </div>
       {error === true ? (
         <div className="text-center">
