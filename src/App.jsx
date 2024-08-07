@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import MainVisual from "./components/MainVisual";
 import SideMenu from "./components/SideMenu";
 import Search from "./Search";
+import Modal from "./components/Modal";
 import { useSelector } from "react-redux";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
       {sideToggle === false ? null : <SideMenu />}
       <MainVisual />
       <Search />
+      <Modal />
     </div>
   );
 }
