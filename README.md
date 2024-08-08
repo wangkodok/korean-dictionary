@@ -14,11 +14,17 @@
 (이미지)
 설명
 
+### 팝업 창
+
+사용자의 주의를 끌고, 상대적으로 짧은 정보를 전달하였습니다.
+
+![image](https://github.com/user-attachments/assets/292fd642-234e-4cf3-a92f-31cd509984e4)
+
 ### 서버 오류 예외 처리
 
-![ViteReact-Chrome2024-08-0114-10-27-Trim-ezgif com-resize](https://github.com/user-attachments/assets/b2fff62f-be47-4587-a5ff-3560ed14f773)
-
 https://stdict.korean.go.kr/main/main.do 이 사이트의 외부 데이터를 받아오는 과정에서 서버 오류가 과도하게 발생하여 팝업 창으로 예외 처리 다시 시도하기 버튼 클릭 시 해결되는 상황이 발생할 수 있습니다.
+
+![ViteReact-Chrome2024-08-0114-10-27-Trim-ezgif com-resize](https://github.com/user-attachments/assets/b2fff62f-be47-4587-a5ff-3560ed14f773)
 
 ## 프로젝트 실행 방법
 
