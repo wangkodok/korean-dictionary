@@ -11,8 +11,11 @@
 (이미지)
 설명
 
-(이미지)
-설명
+### 검색
+
+예시로 "나무"를 검색하면 단어와 뜻이 화면에 출력됩니다.
+
+![ezgif-3-4eb988f463](https://github.com/user-attachments/assets/9fe0f8b7-58b2-4aa0-b6df-14e2afbf803d)
 
 ### 팝업 창
 
