@@ -23,6 +23,12 @@
 
 ![ezgif-5-2f4cbab744](https://github.com/user-attachments/assets/27270471-eb65-4473-830b-6858f5267b28)
 
+### 단어 삭제
+
+우측상단의 아이콘을 클릭하면 저장된 단어가 나오고 "단어 삭제" 버튼을 클릭하면 삭제됩니다.
+
+![ezgif-4-02cdf0eb35](https://github.com/user-attachments/assets/cea86ec7-18d7-41d1-8de7-33143bbafe10)
+
 ### 팝업 창
 
 사용자의 주의를 끌고, 상대적으로 짧은 정보를 전달하였습니다.
