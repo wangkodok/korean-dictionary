@@ -17,6 +17,12 @@
 
 ![ezgif-3-4eb988f463](https://github.com/user-attachments/assets/9fe0f8b7-58b2-4aa0-b6df-14e2afbf803d)
 
+### 단어 저장
+
+목록에서 "단어 저장" 버튼을 클릭하면 우측상단의 아이콘에서 개수가 표시됩니다.
+
+![ezgif-5-2f4cbab744](https://github.com/user-attachments/assets/27270471-eb65-4473-830b-6858f5267b28)
+
 ### 팝업 창
 
 사용자의 주의를 끌고, 상대적으로 짧은 정보를 전달하였습니다.
