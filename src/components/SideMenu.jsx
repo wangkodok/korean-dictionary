@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
+import Button from "../shared/Button";
 
 export default function SideMenu() {
   const saveWord = useSelector((state) => {
@@ -43,14 +44,13 @@ export default function SideMenu() {
                           </dt>
                           <dd className="mb-[2rem]">{data.sense.definition}</dd>
                         </dl>
-                        <button
-                          className="block w-[100px] h-[48px] bg-slate-100 rounded-xl"
+                        <Button
                           onClick={() => {
                             return handleDeleteWord(data);
                           }}
                         >
                           단어 삭제
-                        </button>
+                        </Button>
                       </li>
                     );
                   })}

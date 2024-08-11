@@ -4,6 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import { GoAlert } from "react-icons/go";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useSelector, useDispatch } from "react-redux";
+import Button from "./shared/Button";
 
 export default function Search() {
   const [searchWord, setSearchWord] = useState("");
@@ -139,13 +140,10 @@ export default function Search() {
                 onChange={Input}
               />
             </div>
-            <button
+            <Button
               type="submit"
-              className="absolute right-[12px] top-[50%] translate-y-[-50%] block w-[100px] h-[48px] bg-slate-100 rounded-xl"
+              className="absolute right-[12px] top-[50%] translate-y-[-50%]"
               onClick={() => {
-                // setSearchHandler(() => {
-                //   return true;
-                // });
                 setQuery(() => {
                   return searchWord;
                 });
@@ -157,7 +155,7 @@ export default function Search() {
               }}
             >
               검색
-            </button>
+            </Button>
           </div>
         </form>
 
@@ -191,14 +189,14 @@ export default function Search() {
                         </dt>
                         <dd className="">{data.sense.definition}</dd>
                       </div>
-                      <button
-                        className="static translate-y-0 w-[100px] h-[48px] bg-slate-100 rounded-xl sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
+                      <Button
+                        className="static translate-y-0 sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
                         onClick={() => {
                           return handleSaveWord(data);
                         }}
                       >
                         단어 저장
-                      </button>
+                      </Button>
                     </dl>
                   );
                   // }
@@ -213,14 +211,13 @@ export default function Search() {
             외부 서버에서 데이터를 불러오지 못했습니다. <br /> 아래의 버튼을
             클릭 후 다시 시도해 주세요.
           </p>
-          <button
-            className="h-[48px] px-[24px] bg-slate-100 rounded-xl"
+          <Button
             onClick={() => {
               window.location.reload();
             }}
           >
             다시 시도하기
-          </button>
+          </Button>
         </div>
       ) : null}
       {noWord === "목록 없음" ? (
