@@ -43,7 +43,7 @@ export default function Modal() {
             <p className="mb-[12px]">
               문제가 지속될 경우{" "}
               <a
-                href="https://github.com/wangkodok/korean-dictionary"
+                href="https://github.com/wangkodok/korean-dictionary/tree/readme"
                 target="_black"
                 className="underline text-[#0000ee]"
               >
