@@ -4,7 +4,9 @@ import { CiSearch } from "react-icons/ci";
 import { GoAlert } from "react-icons/go";
 import PulseLoader from "react-spinners/PulseLoader";
 import { useSelector, useDispatch } from "react-redux";
-import Button from "./shared/Button";
+import WordSearchButton from "./features/WordSearchButton";
+import WordSaveButton from "./features/WordSaveButton";
+import ReloadButton from "./features/ReloadButton";
 
 export default function Search() {
   const [searchWord, setSearchWord] = useState("");
@@ -18,10 +20,6 @@ export default function Search() {
   const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
-
-  function handleSaveWord(data) {
-    dispatch({ type: "word-save", word: data });
-  }
 
   const saveWord = useSelector((state) => {
     return state.wordSave;
@@ -140,22 +138,15 @@ export default function Search() {
                 onChange={Input}
               />
             </div>
-            <Button
-              type="submit"
-              className="absolute right-[12px] top-[50%] translate-y-[-50%]"
-              onClick={() => {
-                setQuery(() => {
-                  return searchWord;
-                });
-                setNoWord("");
-                if (noWord === "목록 없음") {
-                  setNoWord("목록 없음");
-                  setSearchResult("");
-                }
-              }}
+            <WordSearchButton
+              setQuery={setQuery}
+              searchWord={searchWord}
+              noWord={noWord}
+              setNoWord={setNoWord}
+              setSearchResult={setSearchResult}
             >
               검색
-            </Button>
+            </WordSearchButton>
           </div>
         </form>
 
@@ -189,14 +180,7 @@ export default function Search() {
                         </dt>
                         <dd className="">{data.sense.definition}</dd>
                       </div>
-                      <Button
-                        className="static translate-y-0 sm:absolute sm:right-[12px] sm:top-[50%] sm:translate-y-[-50%]"
-                        onClick={() => {
-                          return handleSaveWord(data);
-                        }}
-                      >
-                        단어 저장
-                      </Button>
+                      <WordSaveButton data={data}>단어 저장</WordSaveButton>
                     </dl>
                   );
                   // }
@@ -211,13 +195,7 @@ export default function Search() {
             외부 서버에서 데이터를 불러오지 못했습니다. <br /> 아래의 버튼을
             클릭 후 다시 시도해 주세요.
           </p>
-          <Button
-            onClick={() => {
-              window.location.reload();
-            }}
-          >
-            다시 시도하기
-          </Button>
+          <ReloadButton>다시 시도하기</ReloadButton>
         </div>
       ) : null}
       {noWord === "목록 없음" ? (

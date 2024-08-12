@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
-import Button from "../shared/Button";
+import WordDeleteButton from "../features/WordDeleteButton";
 
 export default function SideMenu() {
   const saveWord = useSelector((state) => {
@@ -8,10 +8,6 @@ export default function SideMenu() {
   });
 
   const dispatch = useDispatch();
-
-  function handleDeleteWord(data) {
-    dispatch({ type: "word-delete", word: data });
-  }
 
   function handleToggle() {
     dispatch({ type: "side-toggle", toggle: false });
@@ -44,13 +40,9 @@ export default function SideMenu() {
                           </dt>
                           <dd className="mb-[2rem]">{data.sense.definition}</dd>
                         </dl>
-                        <Button
-                          onClick={() => {
-                            return handleDeleteWord(data);
-                          }}
-                        >
+                        <WordDeleteButton data={data}>
                           단어 삭제
-                        </Button>
+                        </WordDeleteButton>
                       </li>
                     );
                   })}
