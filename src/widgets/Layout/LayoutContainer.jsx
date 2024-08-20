@@ -1,3 +1,3 @@
-export default function LayoutContainer({ children }) {
+export const LayoutContainer = ({ children }) => {
   return <div>{children}</div>;
-}
+};
