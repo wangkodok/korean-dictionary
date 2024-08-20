@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { IoCloseOutline } from "react-icons/io5";
-import WordDeleteButton from "../features/WordDeleteButton";
+import WordDeleteButton from "../../features/ui/button/WordDeleteButton";
 
 export default function SideMenu() {
   const saveWord = useSelector((state) => {

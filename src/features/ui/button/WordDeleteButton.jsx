@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import Button from "../shared/Button";
+import Button from "shared/ui/button";
 
 export default function WordDeleteButton({ data }) {
   const dispatch = useDispatch();

@@ -1,10 +1,10 @@
-import Header from "./components/Header";
-import MainVisual from "./components/MainVisual";
-import SideMenu from "./components/SideMenu";
-import Search from "./Search";
-import Modal from "./components/Modal";
+import { Header } from "widgets/header";
+import MainVisual from "../widgets/slider/MainVisual";
+import SideMenu from "../widgets/sidemenu/SideMenu";
+import Search from "../pages/search/Search";
+import Modal from "../widgets/modal/Modal";
 import { useSelector } from "react-redux";
-import { LayoutContainer } from "./widgets/Layout/LayoutContainer";
+import { LayoutContainer } from "../widgets/layout/LayoutContainer";
 
 export default function App() {
   const sideToggle = useSelector((state) => {

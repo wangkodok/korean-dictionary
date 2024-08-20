@@ -1,8 +1,8 @@
 import { PiNotepadThin } from "react-icons/pi";
 import { useSelector, useDispatch } from "react-redux";
-import { LayoutHeader } from "../widgets/Layout/LayoutHeader.jsx";
+// import { LayoutHeader } from "../../layout/LayoutHeader.jsx";
 
-export default function Header() {
+export const Header = () => {
   const saveWord = useSelector((state) => {
     return state.wordSave;
   });
@@ -16,7 +16,7 @@ export default function Header() {
   }
 
   return (
-    <LayoutHeader>
+    <header className="p-0 md:px-8">
       <div className="p-8 flex justify-between items-center">
         <a href="#" className="text-[20px] font-bold font-['Pretendard']">
           ᄑᅀᅭᄌᆞᆫᄀᆞᆨᄋᆞᄃᆡᄉᆞᄌᆞᆫ
@@ -30,6 +30,6 @@ export default function Header() {
           )}
         </button>
       </div>
-    </LayoutHeader>
+    </header>
   );
-}
+};

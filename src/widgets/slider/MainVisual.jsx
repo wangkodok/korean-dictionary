@@ -1,7 +1,7 @@
-import { LayoutMainVisual } from "../widgets/Layout/LayoutMainVisual";
-import { ContentMainVisual } from "../widgets/Content/ContentMainVisual";
-import Title2 from "../shared/Title2";
-import Desc from "../shared/Desc";
+import { LayoutMainVisual } from "widgets/index";
+import { ContentMainVisual } from "widgets/index";
+import Title2 from "../../shared/ui/title/Title2";
+import Desc from "../../shared/Desc";
 
 export default function MainVisual() {
   return (

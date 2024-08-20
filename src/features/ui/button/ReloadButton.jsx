@@ -1,4 +1,4 @@
-import Button from "../shared/Button";
+import Button from "shared/ui/button";
 
 export default function ReloadButton({ children }) {
   return (
