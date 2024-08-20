@@ -4,7 +4,7 @@ import SideMenu from "../widgets/sidemenu/SideMenu";
 import Search from "../pages/search/ui/Search";
 import Modal from "../widgets/modal/Modal";
 import { useSelector } from "react-redux";
-import { LayoutContainer } from "../widgets/layout/LayoutContainer";
+// import { LayoutContainer } from "../widgets/layout/LayoutContainer";
 
 export default function App() {
   const sideToggle = useSelector((state) => {
@@ -12,12 +12,12 @@ export default function App() {
   });
 
   return (
-    <LayoutContainer>
+    <div>
       <Header />
       {sideToggle === false ? null : <SideMenu />}
       <MainVisual />
       <Search />
       <Modal />
-    </LayoutContainer>
+    </div>
   );
 }

@@ -2,6 +2,6 @@
 
 export { LayoutHeader } from "./layout/LayoutHeader";
 export { LayoutMainVisual } from "./layout/LayoutMainVisual";
-export { LayoutContainer } from "./layout/LayoutContainer";
+// export { LayoutContainer } from "./layout/LayoutContainer";
 
 export { ContentMainVisual } from "./content/ContentMainVisual";
