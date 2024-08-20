@@ -1,9 +1,9 @@
 // import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import App from "./app/App.jsx";
 import "./tailwind.css";
 import { Provider } from "react-redux";
-import store from "./store/index.js";
+import store from "./app/store/index.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
