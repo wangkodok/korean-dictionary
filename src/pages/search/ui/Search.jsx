@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { GoAlert } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
-import ReloadButton from "../../features/ui/button/ReloadButton";
-import WordList from "../../entities/WordList/ui/WordList";
-import Spinner from "../../shared/ui/Spinner/Spinner";
-import Form from "../../widgets/SearchForm/Form";
+import ReloadButton from "../../../features/ui/button/ReloadButton";
+import WordList from "../../../entities/WordList/ui/WordList";
+import Spinner from "../../../shared/ui/Spinner/Spinner";
+import Form from "../../../widgets/SearchForm/Form";
 
 export default function Search() {
   const [searchResult, setSearchResult] = useState("");
