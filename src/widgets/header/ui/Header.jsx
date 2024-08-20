@@ -1,7 +1,8 @@
 import { PiNotepadThin } from "react-icons/pi";
 import { useSelector, useDispatch } from "react-redux";
+// import { LayoutHeader } from "../../layout/LayoutHeader.jsx";
 
-export default function Header() {
+export const Header = () => {
   const saveWord = useSelector((state) => {
     return state.wordSave;
   });
@@ -31,4 +32,4 @@ export default function Header() {
       </div>
     </header>
   );
-}
+};
