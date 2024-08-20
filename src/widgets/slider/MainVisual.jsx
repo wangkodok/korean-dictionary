@@ -1,5 +1,7 @@
-import { LayoutMainVisual } from "widgets/index";
-import { ContentMainVisual } from "widgets/index";
+// import { LayoutMainVisual } from "widgets/index";
+// import { ContentMainVisual } from "widgets/index";
+import LayoutMainVisual from "../layout/LayoutMainVisual";
+import ContentMainVisual from "../content/ContentMainVisual";
 import Title2 from "../../shared/ui/title/Title2";
 import Desc from "../../shared/Desc";
 
