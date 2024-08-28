@@ -108,18 +108,22 @@ export default function Search() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("https://your-koyeb-app.koyeb.app/api/data");
+      const response = await fetch(
+        "https://react-server-wangkodok.koyeb.app/api/search"
+        // `http://localhost:5173//api/search?query=${query}`
+      );
       const result = await response.json();
+      console.log(result);
       // setFetchedData(result.data || "No data found");
       console.log("Fetched data from server:", result);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      // console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [query]);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
