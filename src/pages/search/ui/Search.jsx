@@ -80,9 +80,9 @@ export default function Search() {
     console.log(queryData);
 
     try {
-      // const response = await fetch("http://localhost:3000/api/search", {
+      // const response = await fetch("http://localhost:3000/post-search", {
       const response = await fetch(
-        "https://react-server-wangkodok.koyeb.app/api/search",
+        "https://react-server-wangkodok.koyeb.app/post-search",
         {
           method: "POST",
           headers: {
@@ -110,8 +110,8 @@ export default function Search() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://react-server-wangkodok.koyeb.app/api/search?query=${queryData}`
-          // `http://localhost:5173/api/search?query=${queryData}`
+          `https://react-server-wangkodok.koyeb.app/get-search?query=${queryData}`
+          // `http://localhost:5173/get-search?query=${queryData}`
         );
         const result = await response.json();
         console.log(result);
