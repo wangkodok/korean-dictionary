@@ -65,6 +65,10 @@ export default function Search() {
     fetchData();
   }, [query]);
 
+  // const [inputValue, setInputValue] = useState("");
+  // const [responseMessage, setResponseMessage] = useState("");
+  // const [fetchedData, setFetchedData] = useState("");
+
   const [queryData, setQueryData] = useState(""); // 사용자가 입력한 검색어를 관리하는 상태
   const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
   // const [error_, setError_] = useState(null); // 오류 메시지를 저장하는 상태
@@ -101,6 +105,22 @@ export default function Search() {
       setData(null); // 오류 발생 시 데이터를 초기화
     }
   }
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://your-koyeb-app.koyeb.app/api/data");
+      const result = await response.json();
+      // setFetchedData(result.data || "No data found");
+      console.log("Fetched data from server:", result);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
       <div className="rounded-xl">
