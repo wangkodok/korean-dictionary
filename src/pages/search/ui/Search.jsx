@@ -110,7 +110,7 @@ export default function Search() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://react-server-wangkodok.koyeb.app/api/search?${queryData}`
+          `https://react-server-wangkodok.koyeb.app/api/search?query=${queryData}`
           // `http://localhost:5173/api/search?query=${queryData}`
         );
         const result = await response.json();
