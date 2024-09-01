@@ -6,6 +6,7 @@ import ReloadButton from "../../../features/ui/button/ReloadButton";
 import WordList from "../../../entities/WordList/ui/WordList";
 import Spinner from "../../../shared/ui/Spinner/Spinner";
 import Form from "../../../widgets/SearchForm/Form";
+import RecentSearchHistory from "../../../widgets/SearchForm/RecentSearchHistory";
 
 export default function Search() {
   const [searchResult, setSearchResult] = useState("");
@@ -35,8 +36,9 @@ export default function Search() {
       setNoWord("");
 
       try {
-        const URL = `https://react-server-wangkodok.koyeb.app/fetch-data?query=${query}`;
-        const response = await fetch(URL);
+        const response = await fetch(
+          `https://react-server-wangkodok.koyeb.app/fetch-data?query=${query}`
+        );
 
         if (response.status >= 500) {
           setSearchResult("");
@@ -63,6 +65,11 @@ export default function Search() {
     fetchData();
   }, [query]);
 
+  function handleSearchHistory(word) {
+    console.log(word);
+    setQuery(word);
+  }
+
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
       <div className="rounded-xl">
@@ -75,7 +82,13 @@ export default function Search() {
         {query !== "" && loading === true ? (
           <Spinner loading={loading} />
         ) : (
-          <WordList searchResult={searchResult} />
+          <>
+            <RecentSearchHistory
+              loading={loading}
+              handleSearchHistory={handleSearchHistory}
+            />
+            <WordList searchResult={searchResult} />
+          </>
         )}
       </div>
       {error === true ? (

@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import Button from "shared/ui/button";
 
 export default function WordSearchButton({
@@ -8,11 +9,18 @@ export default function WordSearchButton({
   setSearchResult,
   children,
 }) {
+  const dispatch = useDispatch();
+
   return (
     <Button
       type="submit"
       className="absolute right-[12px] top-[50%] translate-y-[-50%]"
       onClick={() => {
+        dispatch({
+          type: "word-history-add",
+          wordHistory: { word: searchWord },
+        });
+
         setQuery(() => {
           return searchWord;
         });
