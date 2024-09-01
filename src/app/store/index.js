@@ -1,6 +1,6 @@
 import { createStore } from "redux";
 
-const initialState = { wordSave: [], toggle: false };
+const initialState = { wordSave: [], toggle: false, recentSearchHistory: [] };
 
 const counterReducer = (state = initialState, action) => {
   if (action.type === "word-save") {
@@ -25,6 +25,33 @@ const counterReducer = (state = initialState, action) => {
     return {
       ...state,
       toggle: action.toggle,
+    };
+  }
+
+  if (action.type === "word-history-add") {
+    return {
+      ...state,
+      recentSearchHistory: [...state.recentSearchHistory, action.wordHistory],
+    };
+  }
+
+  if (action.type === "word-history-delete") {
+    const newWord = state.recentSearchHistory.filter(
+      (data) => data.word !== action.recentSearchHistory
+    );
+
+    console.log(newWord);
+
+    return {
+      ...state,
+      recentSearchHistory: newWord,
+    };
+  }
+
+  if (action.type === "delete-all-history") {
+    return {
+      ...state,
+      recentSearchHistory: action.handleDeleteAll,
     };
   }
 
