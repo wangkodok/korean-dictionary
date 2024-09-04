@@ -142,12 +142,13 @@ export default function Search() {
         console.log(url);
 
         const response = await fetch(url, {
-          // method: "GET",
-          // headers: {
-          //   "Content-Type": "application/json",
-          //   "Access-Control-Allow-Origin": "*",
-          //   "Access-Control-Allow-Credentials": true,
-          // },
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
+            Accept: "application/json",
+          },
         });
         const result = await response.json();
         setTimeout(() => {
