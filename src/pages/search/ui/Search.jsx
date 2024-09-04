@@ -139,12 +139,14 @@ export default function Search() {
     const fetchData = async () => {
       try {
         const url = `/api/search.do?certkey_no=6715&key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
-        console.log(url);
+        // console.log(`https://stdict.korean.go.kr/${url}`);
 
-        const response = await fetch(url, {
+        const response = await fetch(`${url}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": true,
           },
         });
         const result = await response.json();
