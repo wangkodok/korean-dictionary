@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://stdict.korean.go.kr/api/:path*"
+      "destination": "https://stdict.korean.go.kr/api/search.do:path*"
     }
   ]
 }
