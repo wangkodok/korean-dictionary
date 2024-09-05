@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/search.do?/:path*",
-      "destination": "https://stdict.korean.go.kr/api/search.do?/:path*"
+      "source": "/api/:path*",
+      "destination": "https://stdict.korean.go.kr/api/:path*"
     }
   ]
 }
