@@ -138,7 +138,8 @@ export default function Search() {
 
     const fetchData = async () => {
       try {
-        const url = `/api/search.do?/&key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
+        // const url = `/api/search.do?/&key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
+        const url = `/api/&key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
         console.log(url);
 
         const response = await fetch(url, {
@@ -148,6 +149,7 @@ export default function Search() {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": true,
             Accept: "application/json",
+            Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
           },
         });
         const result = await response.json();
