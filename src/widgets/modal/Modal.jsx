@@ -37,11 +37,13 @@ export default function Modal() {
           </strong>
           <div className="text-[14px] md:text-[18px]">
             <p className="mb-[12px]">
-              <b>REST API 불러오는 과정에서 오류가 발생</b>할 수 있으니 양해
-              부탁드립니다.
+              <b>
+                공공데이터포털에서 Open API 불러오는 과정에서 서버 오류가 발생
+              </b>
+              할 수 있으니 양해 부탁드립니다.
             </p>
             <p className="mb-[12px]">
-              문제가 지속될 경우{" "}
+              오류가 지속될 경우{" "}
               <a
                 href="https://github.com/wangkodok/korean-dictionary/tree/readme"
                 target="_black"
