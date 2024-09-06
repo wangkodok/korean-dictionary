@@ -132,11 +132,48 @@ export default function Search() {
   //   fetchData();
   // }, [queryData]);
 
+  // useEffect(() => {
+  //   if (query === "") return;
+  //   setLoading(true); // 스피너 start
+
+  //   const fetchData = async () => {
+  //     try {
+  //       const url = `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
+  //       console.log(url);
+
+  //       const response = await fetch(url, {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Access-Control-Allow-Origin": "*",
+  //           "Access-Control-Allow-Credentials": true,
+  //           Accept: "application/json",
+  //           Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
+  //         },
+  //       });
+  //       const result = await response.json();
+  //       // setTimeout(() => {
+  //       setSearchResult(result);
+  //       console.log(result, "프록시 설정");
+  //       setLoading(false); // 스피너 end
+  //       setError(false);
+  //       console.log("setTimeout");
+  //       // }, 100);
+  //     } catch (error) {
+  //       setError(true);
+  //       setLoading(false); // 스피너 end
+  //       console.log(error, "오류");
+  //     }
+  //   };
+  //   setTimeout(() => {
+  //     fetchData();
+  //   }, 100);
+  // }, [query]);
+
   useEffect(() => {
     if (query === "") return;
     setLoading(true); // 스피너 start
-
-    const fetchData = async () => {
+    const fetchData = async (retryCount = 3) => {
       try {
         const url = `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
         console.log(url);
@@ -145,29 +182,29 @@ export default function Search() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": true,
             Accept: "application/json",
             Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
           },
         });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const result = await response.json();
-        // setTimeout(() => {
         setSearchResult(result);
-        console.log(result, "프록시 설정");
-        setLoading(false); // 스피너 end
+        setLoading(false);
         setError(false);
-        console.log("setTimeout");
-        // }, 100);
       } catch (error) {
-        setError(true);
-        setLoading(false); // 스피너 end
-        console.log(error, "오류");
+        if (retryCount > 0) {
+          console.log(`Retrying... attempts left: ${retryCount}`);
+          setTimeout(() => fetchData(retryCount - 1), 1000); // 1초 후 재시도
+        } else {
+          setError(true);
+          setLoading(false);
+          console.error("Final error:", error);
+        }
       }
     };
-    setTimeout(() => {
-      fetchData();
-    }, 100);
+    fetchData(); // 타이머 대신 즉시 API 호출
   }, [query]);
 
   return (
