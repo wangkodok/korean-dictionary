@@ -75,10 +75,10 @@ export default function Search() {
   // const [fetchedData, setFetchedData] = useState("");
 
   const [queryData, setQueryData] = useState(""); // 사용자가 입력한 검색어를 관리하는 상태
-  const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
+  // const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
   // const [error_, setError_] = useState(null); // 오류 메시지를 저장하는 상태
 
-  console.log(data);
+  // console.log(data);
 
   // async function handleSubmit(e) {
   //   e.preventDefault();
@@ -170,49 +170,12 @@ export default function Search() {
   //   }, 100);
   // }, [query]);
 
-  // useEffect(() => {
-  //   if (query === "") return;
-  //   setLoading(true); // 스피너 start
-  //   const fetchData = async (retryCount = 3) => {
-  //     try {
-  //       const url = `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
-  //       console.log(url);
-
-  //       const response = await fetch(url, {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Accept: "application/json",
-  //           Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
-  //         },
-  //       });
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! status: ${response.status}`);
-  //       }
-  //       const result = await response.json();
-  //       setSearchResult(result);
-  //       setLoading(false);
-  //       setError(false);
-  //     } catch (error) {
-  //       if (retryCount > 0) {
-  //         console.log(`Retrying... attempts left: ${retryCount}`);
-  //         setTimeout(() => fetchData(retryCount - 1), 1000); // 1초 후 재시도
-  //       } else {
-  //         setError(true);
-  //         setLoading(false);
-  //         console.error("Final error:", error);
-  //       }
-  //     }
-  //   };
-  //   fetchData(); // 타이머 대신 즉시 API 호출
-  // }, [query]);
-
   useEffect(() => {
     if (query === "") return;
     setLoading(true); // 스피너 start
     const fetchData = async (retryCount = 3) => {
       try {
-        const url = `/api/search?q=${query}`;
+        const url = `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
         console.log(url);
 
         const response = await fetch(url, {
@@ -220,6 +183,7 @@ export default function Search() {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
           },
         });
         if (!response.ok) {
@@ -281,7 +245,7 @@ export default function Search() {
               loading={loading}
               handleSearchHistory={handleSearchHistory}
             />
-            <WordList searchResult={searchResult} data={data} error={error} />
+            <WordList searchResult={searchResult} error={error} />
           </>
         )}
         {/* <WordList searchResult={searchResult} data={data} /> */}
