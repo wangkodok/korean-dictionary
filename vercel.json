@@ -6,7 +6,7 @@
     }
   ],
   "functions": {
-    "api/search.js": {
+    "/src/api/search.js": {
       "runtime": "edge"
     }
   }
