@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "https://stdict.korean.go.kr/"
+      "source": "/api/(.*)",
+      "destination": "https://stdict.korean.go.kr/api/$1"
     }
   ]
 }
