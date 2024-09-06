@@ -75,10 +75,10 @@ export default function Search() {
   // const [fetchedData, setFetchedData] = useState("");
 
   const [queryData, setQueryData] = useState(""); // 사용자가 입력한 검색어를 관리하는 상태
-  const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
+  // const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
   // const [error_, setError_] = useState(null); // 오류 메시지를 저장하는 상태
 
-  console.log(data);
+  // console.log(data);
 
   // async function handleSubmit(e) {
   //   e.preventDefault();
@@ -245,7 +245,7 @@ export default function Search() {
               loading={loading}
               handleSearchHistory={handleSearchHistory}
             />
-            <WordList searchResult={searchResult} data={data} error={error} />
+            <WordList searchResult={searchResult} error={error} />
           </>
         )}
         {/* <WordList searchResult={searchResult} data={data} /> */}
