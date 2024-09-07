@@ -181,8 +181,8 @@ export default function Search() {
         const response = await fetch(url, {
           method: "GET",
           headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
+            "Content-Type": "text/json; charset=UTF-8",
+            Accept: "text/json; charset=UTF-8",
             Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
           },
         });
