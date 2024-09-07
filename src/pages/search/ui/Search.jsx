@@ -227,6 +227,10 @@ export default function Search() {
         }
       )
         .then((response) => {
+          // 응답이 성공적이지 않으면 에러를 발생시킴
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
           // 응답 처리
           return response.json(); // JSON 데이터로 파싱된 Promise를 반환
         })
