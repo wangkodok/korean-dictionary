@@ -175,18 +175,21 @@ export default function Search() {
     setLoading(true); // 스피너 start
     const fetchData = async (retryCount = 3) => {
       try {
-        const url = `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
-        console.log(url);
+        // const url = `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`;
+        // console.log(url);
 
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "text/json; charset=UTF-8",
-            // Accept: "text/json; charset=UTF-8",
-            // Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
-            "Content-Language": "ko-KR",
-          },
-        });
+        const response = await fetch(
+          `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "text/json; charset=UTF-8",
+              // Accept: "text/json; charset=UTF-8",
+              // Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
+              "Content-Language": "ko-KR",
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
