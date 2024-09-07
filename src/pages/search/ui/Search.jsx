@@ -219,10 +219,11 @@ export default function Search() {
         {
           method: "GET",
           headers: {
-            "Content-Type": "text/json; charset=UTF-8",
+            // "Content-Type": "text/json; charset=UTF-8",
             // Accept: "text/json; charset=UTF-8",
             // Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
             "Content-Language": "ko-KR",
+            // "Content-Type": "Application/json"
           },
         }
       )
