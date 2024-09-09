@@ -48,7 +48,18 @@ export default function Search() {
             // Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
             "Content-Language": "ko-KR",
             // "Content-Type": "Application/json"
+            referer: "https://korean-dictionary-three.vercel.app/",
+            Origin: "https://stdict.korean.go.kr/api/search.do",
+            Location: "https://stdict.korean.go.kr/api/search.do",
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "text/json; charset=UTF-8",
+            accept: "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
           },
+          scheme: "https",
+          path: "/api/search.do?",
+          authority: "korean-dictionary-three.vercel.app",
         }
       )
         .then((response) => {
