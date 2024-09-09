@@ -42,24 +42,31 @@ export default function Search() {
         `/api/search.do?key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`,
         {
           method: "GET",
+          // headers: {
+          //   // "Content-Type": "text/json; charset=UTF-8",
+          //   // Accept: "text/json; charset=UTF-8",
+          //   // Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
+          //   "Content-Language": "ko-KR",
+          //   // "Content-Type": "Application/json"
+          // },
           headers: {
-            // "Content-Type": "text/json; charset=UTF-8",
-            // Accept: "text/json; charset=UTF-8",
-            // Authorization: `Bearer 9685DE18F33A035667C656E856E9C401`,
-            "Content-Language": "ko-KR",
-            // "Content-Type": "Application/json"
-            referer: "https://korean-dictionary-three.vercel.app/",
-            Origin: "https://stdict.korean.go.kr/api/search.do",
-            Location: "https://stdict.korean.go.kr/api/search.do",
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "text/json; charset=UTF-8",
             accept: "*/*",
-            "accept-encoding": "gzip, deflate, br, zstd",
             "accept-language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-language": "ko-KR",
+            cookie:
+              "WMONID=MB6u9WrHETP; STCID=STC2&&NqCsmf4ZqYvvX47hX3kS1mm0HLyftXpHnRzQC0L5JpksTZGWpbQf!219788197!1725921497167; stdict=NqCsmf4ZqYvvX47hX3kS1mm0HLyftXpHnRzQC0L5JpksTZGWpbQf!219788197",
+            priority: "u=1, i",
+            referer: "https://korean-dictionary-three.vercel.app/",
+            "sec-ch-ua":
+              '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"',
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": '"Windows"',
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin",
+            "user-agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
           },
-          scheme: "https",
-          path: "/api/search.do?",
-          authority: "korean-dictionary-three.vercel.app",
         }
       )
         .then((response) => {
