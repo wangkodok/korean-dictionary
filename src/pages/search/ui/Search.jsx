@@ -85,6 +85,7 @@ export default function Search() {
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
       <div className="rounded-xl">
+        <div>test</div>
         <Form
           setQuery={setQuery}
           noWord={noWord}
