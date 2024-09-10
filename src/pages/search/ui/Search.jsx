@@ -103,10 +103,13 @@ export default function Search() {
   useEffect(() => {
     if (query === "") return;
     setLoading(true); // 스피너 start
+    const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+
     const fetchData = (retryCount = 3) => {
       fetch(
         // `https://stdict.korean.go.kr/api/search.do/key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`,
-        `https://korean-dictionary-three.vercel.app/api/search.do?certkey_no=6715&key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`,
+        // `https://korean-dictionary-three.vercel.app/api/search.do?certkey_no=6715&key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`,
+        `${PROXY}/api/search.do?certkey_no=6715&key=9685DE18F33A035667C656E856E9C401&type_search=search&req_type=json&q=${query}`,
         {
           method: "GET",
           headers: {
