@@ -5,5 +5,10 @@
       "destination": "https://stdict.korean.go.kr/api/:path*"
     }
   ],
-  "regions": ["icn1"]
+  "regions": ["icn1"],
+  "functions": {
+    "app/api/**/*": {
+      "maxDuration": 300
+    }
+  }
 }
