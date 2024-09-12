@@ -41,7 +41,7 @@ export default function Search() {
     const fetchData = (retryCount = 3) => {
       fetch(
         // `${PROXY}/api/search.do?certkey_no=6715&key=${
-        `/api/search.do?certkey_no=6893&key=${
+        `https://stdict.korean.go.kr/api/search.do?certkey_no=6893&key=${
           import.meta.env.VITE_API_KEY
         }&type_search=search&req_type=json&q=${query}`,
         {
