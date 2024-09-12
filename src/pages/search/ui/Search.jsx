@@ -37,10 +37,11 @@ export default function Search() {
   useEffect(() => {
     if (query === "") return;
     setLoading(true); // 스피너 start
-    const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+    // const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
     const fetchData = (retryCount = 3) => {
       fetch(
-        `${PROXY}/api/search.do?certkey_no=6715&key=${
+        // `${PROXY}/api/search.do?certkey_no=6715&key=${
+        `https://stdict.korean.go.kr/api/search.do?certkey_no=6715&key=${
           import.meta.env.VITE_API_KEY
         }&type_search=search&req_type=json&q=${query}`,
         {
