@@ -37,7 +37,10 @@ export default function Search() {
   useEffect(() => {
     if (query === "") return;
     setLoading(true); // 스피너 start
-    const PROXY = window.location.hostname === "localhost" ? "" : "/proxy";
+    const PROXY =
+      window.location.hostname === "localhost"
+        ? ""
+        : "https://stdict.korean.go.kr/api/search.do/proxy";
     const fetchData = (retryCount = 3) => {
       fetch(
         `${PROXY}/api/search.do?certkey_no=6715&key=${
