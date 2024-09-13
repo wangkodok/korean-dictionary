@@ -1,9 +1,9 @@
 import WordSaveButton from "../../../features/ui/button/WordSaveButton";
 
-export default function WordList({ searchResult, data, error }) {
+export default function WordList({ searchResult, data }) {
   return (
     <div className="mt-[4rem]">
-      {searchResult.channel === undefined || error === true
+      {searchResult.channel === undefined
         ? null
         : searchResult.channel.item.map((data, index) => {
             return (
