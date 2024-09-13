@@ -96,7 +96,9 @@ export default function Search() {
 
     const fetchData = async () => {
       try {
-        const url = `/api/search.do?certkey_no=6715&key=FE3A78206805A33617DB3891A13230CA&type_search=search&req_type=json&q=${query}`;
+        const url = `/api/search.do?certkey_no=6715&key=${
+          import.meta.env.VITE_API_KEY
+        }&type_search=search&req_type=json&q=${query}`;
         console.log(url);
 
         const response = await fetch(url, {
