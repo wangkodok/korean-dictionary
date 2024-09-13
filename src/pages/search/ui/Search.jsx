@@ -137,7 +137,7 @@ export default function Search() {
           noWord={noWord}
           setNoWord={setNoWord}
           setSearchResult={setSearchResult}
-          handleSubmit={handleSubmit}
+          // handleSubmit={handleSubmit}
           queryData={queryData}
           setQueryData={setQueryData}
         />
