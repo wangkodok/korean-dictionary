@@ -103,9 +103,9 @@ export default function Search() {
           method: "GET",
           headers: {
             "Content-Type": "text/json; charset=UTF-8",
-            Accept: "text/json; charset=UTF-8",
-            Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-            "Content-Language": "ko-KR",
+            // Accept: "text/json; charset=UTF-8",
+            // Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
+            // "Content-Language": "ko-KR",
             // "Content-Type": "Application/json",
           },
         });
