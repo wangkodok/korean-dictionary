@@ -5,8 +5,5 @@
       "destination": "https://stdict.korean.go.kr/api/$1"
     }
   ],
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/index.html" }
-  ]
+  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
 }
