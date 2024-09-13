@@ -110,13 +110,13 @@ export default function Search() {
           },
         });
         const result = await response.json();
-        setTimeout(() => {
-          setSearchResult(result);
-          console.log(result, "프록시 설정");
-          setLoading(false); // 스피너 end
-          setError(false);
-          console.log("setTimeout");
-        }, 100);
+        setSearchResult(result);
+        console.log(result, "프록시 설정");
+        setLoading(false); // 스피너 end
+        setError(false);
+        console.log("setTimeout");
+        // setTimeout(() => {
+        // }, 100);
       } catch (error) {
         setError(true);
         setLoading(false); // 스피너 end
