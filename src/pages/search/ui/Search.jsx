@@ -89,17 +89,15 @@ export default function Search() {
 
   //   fetchData();
   // }, [queryData]);
-
   useEffect(() => {
     if (query === "") return;
     setLoading(true); // 스피너 start
 
     const fetchData = async () => {
       try {
-        const url = `/api/search.do?certkey_no=6715&key=${
+        const url = `/api/search.do?key=${
           import.meta.env.VITE_API_KEY
         }&type_search=search&req_type=json&q=${query}`;
-        console.log(url);
 
         const response = await fetch(url, {
           method: "GET",
