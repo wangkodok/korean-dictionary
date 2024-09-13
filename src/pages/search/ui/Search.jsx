@@ -95,7 +95,7 @@ export default function Search() {
 
     const fetchData = async () => {
       try {
-        const url = `/api/search.do?key=${
+        const url = `https://korean-dictionary-tan.vercel.app/api/search.do?key=${
           import.meta.env.VITE_API_KEY
         }&type_search=search&req_type=json&q=${query}`;
 
