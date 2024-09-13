@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://stdict.korean.go.kr/api/$1"
+    }
+  ]
+}
