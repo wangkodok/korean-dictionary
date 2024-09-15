@@ -1,4 +1,5 @@
 // import axios from "axios";
+// import { instance } from "../../../app/api/api";
 import { useEffect, useState } from "react";
 import { GoAlert } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
@@ -38,95 +39,57 @@ export default function Search() {
 
   console.log(data);
 
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   console.log(queryData);
-  //   setLoading(true); // 스피너 start
-
-  //   try {
-  //     // const response = await fetch("http://localhost:8000/post-search", {
-  //     const response = await fetch(
-  //       "https://react-server-wangkodok.koyeb.app/post-search",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({ queryData }), // 서버에 전송할 데이터를 JSON으로 변환하여 전송
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       throw new Error("Failed to fetch data");
-  //     }
-
-  //     const result = await response.json(); // 서버로부터 데이터를 받아옴
-  //     setData(result); // 받아온 데이터를 상태에 저장하여 화면에 출력되도록 함
-  //     // setError_(null); // 오류 상태를 초기화
-  //     setLoading(false); // 스피너 start
-  //   } catch (error) {
-  //     console.error(error);
-  //     // setError_("Failed to fetch data from server"); // 오류가 발생하면 오류 메시지를 저장
-  //     setData(null); // 오류 발생 시 데이터를 초기화
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         // `http://localhost:5173/get-search?query=${queryData}`
-  //         `https://react-server-wangkodok.koyeb.app/get-search?query=${queryData}`
-  //       );
-  //       const result = await response.json();
-  //       console.log(result);
-  //       // setFetchedData(result.data || "No data found");
-  //       console.log("Fetched data from server:", result);
-  //     } catch (error) {
-  //       // console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [queryData]);
-  useEffect(() => {
-    if (query === "") return;
+  async function handleSubmit(e) {
+    e.preventDefault();
+    console.log(queryData);
     setLoading(true); // 스피너 start
 
+    try {
+      // const response = await fetch("http://localhost:8000/post-search", {
+      const response = await fetch(
+        "https://react-server-wangkodok.koyeb.app/post-search",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ queryData }), // 서버에 전송할 데이터를 JSON으로 변환하여 전송
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json(); // 서버로부터 데이터를 받아옴
+      setData(result); // 받아온 데이터를 상태에 저장하여 화면에 출력되도록 함
+      // setError_(null); // 오류 상태를 초기화
+      setLoading(false); // 스피너 start
+    } catch (error) {
+      console.error(error);
+      // setError_("Failed to fetch data from server"); // 오류가 발생하면 오류 메시지를 저장
+      setData(null); // 오류 발생 시 데이터를 초기화
+    }
+  }
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = `/api/search.do?key=${
-          import.meta.env.VITE_API_KEY
-        }&type_search=search&req_type=json&q=${query}`;
-
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            "Content-Type": "text/json; charset=UTF-8",
-            // Accept: "text/json; charset=UTF-8",
-            // Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-            // "Content-Language": "ko-KR",
-            // "Content-Type": "Application/json",
-          },
-        });
+        const response = await fetch(
+          // `http://localhost:5173/get-search?query=${queryData}`
+          `https://react-server-wangkodok.koyeb.app/get-search?query=${queryData}`
+        );
         const result = await response.json();
-        setSearchResult(result);
-        console.log(result, "프록시 설정");
-        setLoading(false); // 스피너 end
-        setError(false);
-        console.log("setTimeout");
-        // setTimeout(() => {
-        // }, 100);
+        console.log(result);
+        // setFetchedData(result.data || "No data found");
+        console.log("Fetched data from server:", result);
       } catch (error) {
-        setError(true);
-        setLoading(false); // 스피너 end
-        console.log(error, "오류");
+        // console.error("Error fetching data:", error);
       }
     };
-    setTimeout(() => {
-      fetchData();
-    }, 100);
-  }, [query]);
+
+    fetchData();
+  }, [queryData]);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
@@ -137,7 +100,7 @@ export default function Search() {
           noWord={noWord}
           setNoWord={setNoWord}
           setSearchResult={setSearchResult}
-          // handleSubmit={handleSubmit}
+          handleSubmit={handleSubmit}
           queryData={queryData}
           setQueryData={setQueryData}
         />
@@ -149,7 +112,9 @@ export default function Search() {
               loading={loading}
               handleSearchHistory={handleSearchHistory}
             />
-            <WordList searchResult={searchResult} data={data} error={error} />
+            {data === "ㅅㄷㄴㅅ" ? null : (
+              <WordList searchResult={searchResult} data={data} error={error} />
+            )}
           </>
         )}
       </div>
