@@ -2,6 +2,7 @@ import WordSaveButton from "../../../features/ui/button/WordSaveButton";
 
 export default function WordList({ searchResult, data }) {
   console.log(data, "값");
+  console.log(searchResult, "searchResult 값");
   return (
     // <div className="mt-[4rem]">
     //   {searchResult.channel === undefined
