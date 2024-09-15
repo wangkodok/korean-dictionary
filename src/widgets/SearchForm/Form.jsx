@@ -23,10 +23,10 @@ export default function Form({
     <form
       className="bg-slate-100 shadow-lg shadow-slate-300/50 rounded-xl"
       action="#"
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-      // onSubmit={handleSubmit}
+      // onSubmit={(e) => {
+      //   e.preventDefault();
+      // }}
+      onSubmit={handleSubmit}
     >
       <label htmlFor="text" className="block text-center text-[1.25rem]">
         {/* 국립국어원 표준국어대사전 찾기 */}
