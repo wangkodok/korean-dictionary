@@ -1,10 +1,10 @@
 import { useDispatch } from "react-redux";
 import Button from "shared/ui/button";
 
-export default function WordDeleteButton({ data }) {
+export default function WordDeleteButton({ data }: { data: {} }) {
   const dispatch = useDispatch();
 
-  function handleDeleteWord(data) {
+  function handleDeleteWord(data: {}) {
     dispatch({ type: "word-delete", word: data });
   }
 

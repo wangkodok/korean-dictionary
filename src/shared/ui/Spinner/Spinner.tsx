@@ -1,6 +1,6 @@
 import PulseLoader from "react-spinners/PulseLoader";
 
-export default function Spinner({ loading }) {
+export default function Spinner({ loading }: { loading: boolean }) {
   return (
     <div className="mt-[4rem] text-center">
       <PulseLoader

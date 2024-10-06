@@ -1,6 +1,10 @@
 import Button from "shared/ui/button";
 
-export default function ReloadButton({ children }) {
+export default function ReloadButton({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <Button
       onClick={() => {
