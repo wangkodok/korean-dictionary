@@ -67,24 +67,6 @@ export default function Search() {
     }
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:5173/get-search?query=${queryData}`
-          // `https://react-server-wangkodok.koyeb.app/fetch-data?query=${queryData}`
-        );
-        const result = await response.json();
-        // setFetchedData(result.data || "No data found");
-        // console.log("Fetched data from server:", result);
-      } catch (error) {
-        // console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [queryData]);
-
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
       <div className="rounded-xl">
