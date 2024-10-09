@@ -58,7 +58,6 @@ const counterReducer: any = (state = initialState, action: CounterAction) => {
   if (action.type === "word-history-delete") {
     const newWord = state.recentSearchHistory.filter(
       (data: { word: string }) => {
-        console.log(data, "data 타입은?");
         return data.word !== action.recentSearchHistory.word;
       }
     );

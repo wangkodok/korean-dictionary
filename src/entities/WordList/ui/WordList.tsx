@@ -7,7 +7,6 @@ export default function WordList({
     channel: { item: [{ word: string; sense: { definition: string } }] };
   };
 }) {
-  console.log(data, "data 확인");
   return (
     <div className="mt-[4rem]">
       {!data && null}

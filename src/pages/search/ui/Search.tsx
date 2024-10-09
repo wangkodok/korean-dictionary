@@ -18,7 +18,6 @@ export default function Search() {
   const dispatch = useDispatch();
 
   const saveWord = useSelector((state: { wordSave: {}[] }) => {
-    console.log(state.wordSave, "state.wordSave");
     return state.wordSave;
   });
 

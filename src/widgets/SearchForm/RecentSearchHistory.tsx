@@ -9,7 +9,6 @@ export default function RecentSearchHistory({
   handleSearchHistory: (word: string) => void;
 }) {
   const store = useSelector((state: { recentSearchHistory: [] }) => {
-    console.log(state.recentSearchHistory, "state.recentSearchHistory");
     return state.recentSearchHistory;
   });
 
