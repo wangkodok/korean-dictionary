@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 // import { instance } from "../../../app/api/api";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -40,16 +40,31 @@ export default function Search() {
     setLoading(true); // 스피너 start
 
     try {
-      const response = await axios.get(
-        `http://localhost:8000/get-search?q=${query}`
-      );
-      setData(response.data); // 결과를 상태에 저장
+      const response = await fetch("http://localhost:8000/post-search", {
+        // const response = await fetch(
+        //   "https://react-server-wangkodok.koyeb.app/post-search",
+        //   {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ queryData }), // 서버에 전송할 데이터를 JSON으로 변환하여 전송
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const result = await response.json(); // 서버로부터 데이터를 받아옴
+      setData(result); // 받아온 데이터를 상태에 저장하여 화면에 출력되도록 함
+      // setError_(null); // 오류 상태를 초기화
       setLoading(false); // 스피너 start
     } catch (error) {
-      console.error("Error fetching search result:", error);
+      console.error(error);
+      // setError_("Failed to fetch data from server"); // 오류가 발생하면 오류 메시지를 저장
+      setData(null); // 오류 발생 시 데이터를 초기화
     }
   }
-  console.log(data);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
