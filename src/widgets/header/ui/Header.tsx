@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 // import { LayoutHeader } from "../../layout/LayoutHeader.jsx";
 
 export const Header = () => {
-  const saveWord = useSelector((state) => {
+  const saveWord = useSelector((state: { wordSave: {}[] }) => {
     return state.wordSave;
   });
 

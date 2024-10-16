@@ -1,8 +1,27 @@
-import { createStore } from "redux";
+// import { createStore } from "redux";
+import { legacy_createStore as createStore } from "redux";
 
-const initialState = { wordSave: [], toggle: false, recentSearchHistory: [] };
+const initialState: {
+  wordSave: [];
+  toggle: boolean;
+  recentSearchHistory: [];
+} = {
+  wordSave: [],
+  toggle: false,
+  recentSearchHistory: [],
+};
 
-const counterReducer = (state = initialState, action) => {
+interface CounterAction {
+  type: string;
+  word: { target_code: string };
+  toggle: boolean;
+  wordHistory: {};
+  recentSearchHistory: { word: string };
+  handleDeleteAll: {};
+}
+
+// 리덕스 any 타입 지정 중
+const counterReducer: any = (state = initialState, action: CounterAction) => {
   if (action.type === "word-save") {
     return {
       ...state,
@@ -12,7 +31,8 @@ const counterReducer = (state = initialState, action) => {
 
   if (action.type === "word-delete") {
     const newWord = state.wordSave.filter(
-      (data) => data.target_code !== action.word.target_code
+      (data: { target_code: string }) =>
+        data.target_code !== action.word.target_code
     );
 
     return {
@@ -37,10 +57,10 @@ const counterReducer = (state = initialState, action) => {
 
   if (action.type === "word-history-delete") {
     const newWord = state.recentSearchHistory.filter(
-      (data) => data.word !== action.recentSearchHistory
+      (data: { word: string }) => {
+        return data.word !== action.recentSearchHistory.word;
+      }
     );
-
-    console.log(newWord);
 
     return {
       ...state,

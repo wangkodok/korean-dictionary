@@ -1,5 +1,6 @@
-// import axios from "axios";
+import axios from "axios";
 // import { instance } from "../../../app/api/api";
+import React from "react";
 import { useEffect, useState } from "react";
 import { GoAlert } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,15 +11,13 @@ import Form from "../../../widgets/SearchForm/Form";
 import RecentSearchHistory from "../../../widgets/SearchForm/RecentSearchHistory";
 
 export default function Search() {
-  const [searchResult, setSearchResult] = useState("");
   const [query, setQuery] = useState("");
   const [error, setError] = useState(false);
-  const [noWord, setNoWord] = useState("");
   const [loading, setLoading] = useState(true);
 
   const dispatch = useDispatch();
 
-  const saveWord = useSelector((state) => {
+  const saveWord = useSelector((state: { wordSave: {}[] }) => {
     return state.wordSave;
   });
 
@@ -26,10 +25,9 @@ export default function Search() {
     if (saveWord.length === 0) {
       dispatch({ type: "side-toggle", toggle: false });
     }
-  }, [dispatch, saveWord]);
+  }, [saveWord]);
 
-  function handleSearchHistory(word) {
-    console.log(word);
+  function handleSearchHistory(word: string) {
     setQuery(word);
   }
 
@@ -37,72 +35,30 @@ export default function Search() {
   const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
   // const [error_, setError_] = useState(null); // 오류 메시지를 저장하는 상태
 
-  console.log(data);
-
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log(queryData);
     setLoading(true); // 스피너 start
 
     try {
-      // const response = await fetch("http://localhost:8000/post-search", {
-      const response = await fetch(
-        "https://react-server-wangkodok.koyeb.app/post-search",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ queryData }), // 서버에 전송할 데이터를 JSON으로 변환하여 전송
-        }
+      const response = await axios.get(
+        `https://react-server-wangkodok.koyeb.app/get-search?q=${query}`
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-
-      const result = await response.json(); // 서버로부터 데이터를 받아옴
-      setData(result); // 받아온 데이터를 상태에 저장하여 화면에 출력되도록 함
-      // setError_(null); // 오류 상태를 초기화
+      setData(response.data); // 결과를 상태에 저장
       setLoading(false); // 스피너 start
     } catch (error) {
-      console.error(error);
-      // setError_("Failed to fetch data from server"); // 오류가 발생하면 오류 메시지를 저장
-      setData(null); // 오류 발생 시 데이터를 초기화
+      console.error("Error fetching search result:", error);
     }
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          // `http://localhost:5173/get-search?query=${queryData}`
-          `https://react-server-wangkodok.koyeb.app/fetch-data?query=${queryData}`
-        );
-        const result = await response.json();
-        console.log(result);
-        // setFetchedData(result.data || "No data found");
-        console.log("Fetched data from server:", result);
-      } catch (error) {
-        // console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [queryData]);
+  console.log(data);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
       <div className="rounded-xl">
-        <div>test</div>
         <Form
           setQuery={setQuery}
-          noWord={noWord}
-          setNoWord={setNoWord}
-          setSearchResult={setSearchResult}
+          setQueryData={setQueryData}
           handleSubmit={handleSubmit}
           queryData={queryData}
-          setQueryData={setQueryData}
         />
         {query !== "" && loading === true ? (
           <Spinner loading={loading} />
@@ -112,9 +68,7 @@ export default function Search() {
               loading={loading}
               handleSearchHistory={handleSearchHistory}
             />
-            {data === "ㅅㄷㄴㅅ" ? null : (
-              <WordList searchResult={searchResult} data={data} error={error} />
-            )}
+            {data === "ㅅㄷㄴㅅ" ? null : <WordList data={data} />}
           </>
         )}
       </div>
@@ -127,9 +81,6 @@ export default function Search() {
           </p>
           <ReloadButton>다시 시도하기</ReloadButton>
         </div>
-      ) : null}
-      {noWord === "목록 없음" ? (
-        <p className="mb-5">{query} 단어가 없습니다.</p>
       ) : null}
     </div>
   );

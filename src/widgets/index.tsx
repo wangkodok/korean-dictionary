@@ -4,4 +4,4 @@
 // export { LayoutMainVisual } from "./Layout/layoutMainVisual";
 // export { LayoutContainer } from "./Layout/layoutContainer";
 
-export { ContentMainVisual } from "./Content/ContentMainVisual";
+// export { ContentMainVisual } from "./Content/ContentMainVisual";

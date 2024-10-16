@@ -1,10 +1,17 @@
+import React from "react";
 import { useDispatch } from "react-redux";
 import Button from "shared/ui/button";
 
-export default function WordSaveButton({ data, children }) {
+export default function WordSaveButton({
+  data,
+  children,
+}: {
+  data: {};
+  children: React.ReactNode;
+}) {
   const dispatch = useDispatch();
 
-  function handleSaveWord(data) {
+  function handleSaveWord(data: {}) {
     dispatch({ type: "word-save", word: data });
   }
 

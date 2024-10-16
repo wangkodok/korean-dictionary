@@ -1,14 +1,20 @@
 import { useSelector, useDispatch } from "react-redux";
 import CancelButton from "../../features/ui/button/CancelButton";
 
-export default function RecentSearchHistory({ loading, handleSearchHistory }) {
-  const store = useSelector((state) => {
+export default function RecentSearchHistory({
+  loading,
+  handleSearchHistory,
+}: {
+  loading: boolean;
+  handleSearchHistory: (word: string) => void;
+}) {
+  const store = useSelector((state: { recentSearchHistory: [] }) => {
     return state.recentSearchHistory;
   });
 
   const dispatch = useDispatch();
 
-  function handleHistoryDelete(word) {
+  function handleHistoryDelete(word: {}) {
     dispatch({
       type: "word-history-delete",
       recentSearchHistory: word,
@@ -33,8 +39,7 @@ export default function RecentSearchHistory({ loading, handleSearchHistory }) {
             <p className="text-center">최근 검색어 내역이 없습니다.</p>
           ) : (
             <ul>
-              {store.map((data, index) => {
-                console.log(data, index);
+              {store.map((data: { word: string }, index: number) => {
                 if (index < 5) {
                   return (
                     <li key={index} className="mb-2">
@@ -50,7 +55,7 @@ export default function RecentSearchHistory({ loading, handleSearchHistory }) {
                         <CancelButton
                           size="20"
                           onClick={() => {
-                            return handleHistoryDelete(data.word);
+                            return handleHistoryDelete(data);
                           }}
                         />
                       </div>
