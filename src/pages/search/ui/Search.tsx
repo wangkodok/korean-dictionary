@@ -41,7 +41,7 @@ export default function Search() {
 
     try {
       const response = await axios.get(
-        `http://localhost:8000/get-search?q=${query}`
+        `https://react-server-wangkodok.koyeb.app/get-search?q=${query}`
       );
       setData(response.data); // 결과를 상태에 저장
       setLoading(false); // 스피너 start
