@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 // import { LayoutContainer } from "widgets/index";
 
 export default function App() {
-  const sideToggle = useSelector((state) => {
+  const sideToggle = useSelector((state: { toggle: boolean }) => {
     return state.toggle;
   });
 

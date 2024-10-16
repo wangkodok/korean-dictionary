@@ -3,7 +3,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import WordDeleteButton from "../../features/ui/button/WordDeleteButton";
 
 export default function SideMenu() {
-  const saveWord = useSelector((state) => {
+  const saveWord = useSelector((state: { wordSave: [] }) => {
     return state.wordSave;
   });
 
@@ -28,24 +28,29 @@ export default function SideMenu() {
               <div className="">
                 <p className="mb-6 text-[1.25rem] font-[900]">내 단어장</p>
                 <ul>
-                  {saveWord.map((data, index) => {
-                    return (
-                      <li
-                        key={index}
-                        className="pb-[1rem] mb-[1rem] border-b-[.0625rem]"
-                      >
-                        <dl>
-                          <dt className="mb-[.25rem]">
-                            <strong>{data.word}</strong>
-                          </dt>
-                          <dd className="mb-[2rem]">{data.sense.definition}</dd>
-                        </dl>
-                        <WordDeleteButton data={data}>
-                          단어 삭제
-                        </WordDeleteButton>
-                      </li>
-                    );
-                  })}
+                  {saveWord.map(
+                    (
+                      data: { word: string; sense: { definition: string } },
+                      index: number
+                    ) => {
+                      return (
+                        <li
+                          key={index}
+                          className="pb-[1rem] mb-[1rem] border-b-[.0625rem]"
+                        >
+                          <dl>
+                            <dt className="mb-[.25rem]">
+                              <strong>{data.word}</strong>
+                            </dt>
+                            <dd className="mb-[2rem]">
+                              {data.sense.definition}
+                            </dd>
+                          </dl>
+                          <WordDeleteButton data={data} />
+                        </li>
+                      );
+                    }
+                  )}
                 </ul>
               </div>
             </div>

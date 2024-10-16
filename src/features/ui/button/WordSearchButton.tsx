@@ -3,11 +3,12 @@ import Button from "shared/ui/button";
 
 export default function WordSearchButton({
   setQuery,
-  searchWord,
-  noWord,
-  setNoWord,
-  setSearchResult,
+  queryData,
   children,
+}: {
+  setQuery: (query: string) => void;
+  queryData: string;
+  children: React.ReactNode;
 }) {
   const dispatch = useDispatch();
 
@@ -18,17 +19,10 @@ export default function WordSearchButton({
       onClick={() => {
         dispatch({
           type: "word-history-add",
-          wordHistory: { word: searchWord },
+          wordHistory: { word: queryData },
         });
 
-        setQuery(() => {
-          return searchWord;
-        });
-        setNoWord("");
-        if (noWord === "목록 없음") {
-          setNoWord("목록 없음");
-          setSearchResult("");
-        }
+        setQuery(queryData);
       }}
     >
       {children}

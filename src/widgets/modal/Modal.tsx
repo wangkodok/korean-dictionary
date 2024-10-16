@@ -11,7 +11,7 @@ export default function Modal() {
     } else {
       const now = new Date();
       const dismissedDate = new Date(popupDismissedDate);
-      if (now - dismissedDate > 24 * 60 * 60 * 1000) {
+      if (now.getTime() - dismissedDate.getTime() > 24 * 60 * 60 * 1000) {
         setVisible(true);
       }
     }
@@ -72,6 +72,6 @@ export default function Modal() {
         </div>
       </div>
     </div>,
-    document.querySelector("#root")
+    document.querySelector("#root") as HTMLElement
   );
 }

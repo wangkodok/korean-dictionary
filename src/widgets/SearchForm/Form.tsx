@@ -1,31 +1,23 @@
 // import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import WordSearchButton from "../../features/ui/button/WordSearchButton";
+import React from "react";
 
 export default function Form({
   setQuery,
-  noWord,
-  setNoWord,
-  setSearchResult,
+  setQueryData,
   handleSubmit,
   queryData,
-  setQueryData,
+}: {
+  setQuery: (query: string) => void;
+  setQueryData: (value: string) => void;
+  handleSubmit: (e: React.FormEvent) => void; // 인자 없는 형태로 정의
+  queryData: string;
 }) {
-  // const [searchWord, setSearchWord] = useState("");
-
-  // function handleInput(e) {
-  //   setSearchWord(() => {
-  //     return e.target.value;
-  //   });
-  // }
-
   return (
     <form
       className="bg-slate-100 shadow-lg shadow-slate-300/50 rounded-xl"
       action="#"
-      // onSubmit={(e) => {
-      //   e.preventDefault();
-      // }}
       onSubmit={handleSubmit}
     >
       <label htmlFor="text" className="block text-center text-[1.25rem]">
@@ -44,21 +36,12 @@ export default function Form({
             autoComplete="text"
             required
             className="w-full"
-            // value={searchWord}
             value={queryData}
-            placeholder="단어를 입력하세요. 예) 나무"
-            // onChange={handleInput}
+            placeholder="단어를 입력하세요. 예) 나무, 코딩"
             onChange={(e) => setQueryData(e.target.value)} // 입력값이 변경될 때 상태를 업데이트
           />
         </div>
-        <WordSearchButton
-          setQuery={setQuery}
-          // searchWord={searchWord}
-          searchWord={queryData}
-          noWord={noWord}
-          setNoWord={setNoWord}
-          setSearchResult={setSearchResult}
-        >
+        <WordSearchButton setQuery={setQuery} queryData={queryData}>
           검색
         </WordSearchButton>
       </div>
