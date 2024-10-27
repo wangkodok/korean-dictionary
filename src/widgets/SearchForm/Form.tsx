@@ -6,19 +6,20 @@ import React from "react";
 export default function Form({
   setQuery,
   setQueryData,
-  handleSubmit,
+  // handleSubmit,
   queryData,
 }: {
   setQuery: (query: string) => void;
   setQueryData: (value: string) => void;
-  handleSubmit: (e: React.FormEvent) => void; // 인자 없는 형태로 정의
+  // handleSubmit: (e: React.FormEvent) => void; // 인자 없는 형태로 정의
   queryData: string;
 }) {
   return (
     <form
       className="bg-slate-100 shadow-lg shadow-slate-300/50 rounded-xl"
       action="#"
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
+      onSubmit={(e) => {e.preventDefault()}}
     >
       <label htmlFor="text" className="block text-center text-[1.25rem]">
         {/* 국립국어원 표준국어대사전 찾기 */}
