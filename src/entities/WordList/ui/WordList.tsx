@@ -1,17 +1,17 @@
 import WordSaveButton from "../../../features/ui/button/WordSaveButton";
 
 export default function WordList({
-  data,
+  dataApi,
 }: {
-  data: null | {
+  dataApi: null | {
     channel: { item: [{ word: string; sense: { definition: string } }] };
   };
 }) {
   return (
     <div className="mt-[4rem]">
-      {!data && null}
-      {data &&
-        data.channel.item.map(
+      {!dataApi && null}
+      {dataApi &&
+        dataApi.channel.item.map(
           (
             data: { word: string; sense: { definition: string } },
             index: number
