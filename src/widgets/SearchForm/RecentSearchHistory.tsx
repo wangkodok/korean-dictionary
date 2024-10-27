@@ -24,7 +24,8 @@ export default function RecentSearchHistory({
   function handleDeleteAll() {
     dispatch({ type: "delete-all-history", handleDeleteAll: [] });
   }
-
+  console.log(loading)
+  console.log(store.length)
   return (
     <>
       {!loading && (

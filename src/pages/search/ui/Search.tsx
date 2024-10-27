@@ -35,21 +35,42 @@ export default function Search() {
   const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
   // const [error_, setError_] = useState(null); // 오류 메시지를 저장하는 상태
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setLoading(true); // 스피너 start
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   setLoading(true); // 스피너 start
 
-    try {
-      const response = await axios.get(
-        `https://react-server-wangkodok.koyeb.app/get-search?q=${query}`
-      );
-      setData(response.data); // 결과를 상태에 저장
-      setLoading(false); // 스피너 start
-    } catch (error) {
-      console.error("Error fetching search result:", error);
-    }
-  }
-  console.log(data);
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:8000/get-search?query=${query}`
+  //     );
+  //     setData(response.data); // 결과를 상태에 저장
+  //     setLoading(false); // 스피너 start
+  //   } catch (error) {
+  //     console.error("Error fetching search result:", error);
+  //   }
+  // }
+  // console.log(data);
+
+  const [dataApi, setDataApi] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true); // 데이터 요청 전 로딩 시작
+      try {
+        const response = await fetch(`https://react-server-wangkodok.koyeb.app/get-search?query=${query}`);
+        if (!response.ok) throw new Error('데이터를 가져오는 데 실패했습니다.');
+        
+        const result = await response.json();
+        setDataApi(result); // 데이터 상태 업데이트
+      } catch (error) {
+        // setError(error.message); // 에러 상태 업데이트
+      } finally {
+        setLoading(false); // 로딩 종료
+      }
+    };
+
+    fetchData();
+  }, [query]);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
@@ -57,9 +78,10 @@ export default function Search() {
         <Form
           setQuery={setQuery}
           setQueryData={setQueryData}
-          handleSubmit={handleSubmit}
+          // handleSubmit={handleSubmit}
           queryData={queryData}
         />
+
         {query !== "" && loading === true ? (
           <Spinner loading={loading} />
         ) : (
@@ -68,7 +90,7 @@ export default function Search() {
               loading={loading}
               handleSearchHistory={handleSearchHistory}
             />
-            {data === "ㅅㄷㄴㅅ" ? null : <WordList data={data} />}
+            {data === "ㅅㄷㄴㅅ" ? null : <WordList dataApi={dataApi} />}
           </>
         )}
       </div>
