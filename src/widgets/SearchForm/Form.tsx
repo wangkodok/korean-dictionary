@@ -8,18 +8,24 @@ export default function Form({
   setQueryData,
   // handleSubmit,
   queryData,
+  setIsSearchButton ,
 }: {
   setQuery: (query: string) => void;
   setQueryData: (value: string) => void;
   // handleSubmit: (e: React.FormEvent) => void; // 인자 없는 형태로 정의
   queryData: string;
+  setIsSearchButton : (value: boolean) => void;
 }) {
+
   return (
     <form
       className="bg-slate-100 shadow-lg shadow-slate-300/50 rounded-xl"
       action="#"
       // onSubmit={handleSubmit}
-      onSubmit={(e) => {e.preventDefault()}}
+      onSubmit={(e) => {
+        e.preventDefault();
+        setIsSearchButton(true);
+      }}
     >
       <label htmlFor="text" className="block text-center text-[1.25rem]">
         {/* 국립국어원 표준국어대사전 찾기 */}
