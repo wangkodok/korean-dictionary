@@ -1,19 +1,20 @@
-import axios from "axios";
+// import axios from "axios";
 // import { instance } from "../../../app/api/api";
-import React from "react";
+// import React from "react";
 import { useEffect, useState } from "react";
-import { GoAlert } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
-import ReloadButton from "../../../features/ui/button/ReloadButton";
-import WordList from "../../../entities/WordList/ui/WordList";
-import Spinner from "../../../shared/ui/Spinner/Spinner";
-import Form from "../../../widgets/SearchForm/Form";
-import RecentSearchHistory from "../../../widgets/SearchForm/RecentSearchHistory";
+import { GoAlert } from "react-icons/go";
+import ReloadButton from "features/ui/button/ReloadButton";
+import WordList from "entities/WordList/ui/WordList";
+import Spinner from "shared/ui/Spinner/Spinner";
+import Form from "widgets/SearchForm/Form";
+import RecentSearchHistory from "widgets/SearchForm/RecentSearchHistory";
 
 export default function Search() {
   const [query, setQuery] = useState("");
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isSearchButton, setIsSearchButton] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -33,23 +34,6 @@ export default function Search() {
 
   const [queryData, setQueryData] = useState(""); // 사용자가 입력한 검색어를 관리하는 상태
   const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
-  // const [error_, setError_] = useState(null); // 오류 메시지를 저장하는 상태
-
-  // async function handleSubmit(e: React.FormEvent) {
-  //   e.preventDefault();
-  //   setLoading(true); // 스피너 start
-
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8000/get-search?query=${query}`
-  //     );
-  //     setData(response.data); // 결과를 상태에 저장
-  //     setLoading(false); // 스피너 start
-  //   } catch (error) {
-  //     console.error("Error fetching search result:", error);
-  //   }
-  // }
-  // console.log(data);
 
   const [dataApi, setDataApi] = useState(null);
 
@@ -62,15 +46,19 @@ export default function Search() {
         
         const result = await response.json();
         setDataApi(result); // 데이터 상태 업데이트
+        setIsSearchButton(false);
       } catch (error) {
-        // setError(error.message); // 에러 상태 업데이트
+        console.log(error)
+        setError(true); // 에러 상태 업데이트
       } finally {
         setLoading(false); // 로딩 종료
       }
     };
 
-    fetchData();
-  }, [query]);
+    if (isSearchButton) {
+      fetchData();
+    }
+  }, [isSearchButton]);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
@@ -80,9 +68,23 @@ export default function Search() {
           setQueryData={setQueryData}
           // handleSubmit={handleSubmit}
           queryData={queryData}
+          setIsSearchButton={setIsSearchButton}
         />
 
-        {query !== "" && loading === true ? (
+        {loading ? (
+          <Spinner loading={loading} />
+        ) : (
+          <>
+          {dataApi !== null ? <RecentSearchHistory
+              // loading={loading}
+              handleSearchHistory={handleSearchHistory}
+            /> : null}
+            
+            <WordList dataApi={dataApi} />
+            {/* {data === "ㅅㄷㄴㅅ" ? null : <WordList dataApi={dataApi} />} */}
+          </>
+        )}
+        {/* {query !== "" && loading === true ? (
           <Spinner loading={loading} />
         ) : (
           <>
@@ -92,7 +94,7 @@ export default function Search() {
             />
             {data === "ㅅㄷㄴㅅ" ? null : <WordList dataApi={dataApi} />}
           </>
-        )}
+        )} */}
       </div>
       {error === true ? (
         <div className="text-center">
