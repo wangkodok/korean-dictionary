@@ -4,19 +4,20 @@ import WordSearchButton from "../../features/ui/button/WordSearchButton";
 import React from "react";
 
 export default function Form({
+  query,
   setQuery,
-  setQueryData,
+  // setQueryData,
   // handleSubmit,
-  queryData,
-  setIsSearchButton ,
+  // queryData,
+  setIsSearchButton,
 }: {
+  query: string;
   setQuery: (query: string) => void;
-  setQueryData: (value: string) => void;
+  // setQueryData: (value: string) => void;
   // handleSubmit: (e: React.FormEvent) => void; // 인자 없는 형태로 정의
-  queryData: string;
-  setIsSearchButton : (value: boolean) => void;
+  // queryData: string;
+  setIsSearchButton: (value: boolean) => void;
 }) {
-
   return (
     <form
       className="bg-slate-100 shadow-lg shadow-slate-300/50 rounded-xl"
@@ -43,12 +44,15 @@ export default function Form({
             autoComplete="text"
             required
             className="w-full"
-            value={queryData}
+            value={query}
             placeholder="단어를 입력하세요. 예) 나무, 코딩"
-            onChange={(e) => setQueryData(e.target.value)} // 입력값이 변경될 때 상태를 업데이트
+            onChange={(e) => {
+              console.log(e.target.value);
+              setQuery(e.target.value);
+            }}
           />
         </div>
-        <WordSearchButton setQuery={setQuery} queryData={queryData}>
+        <WordSearchButton query={query} setQuery={setQuery}>
           검색
         </WordSearchButton>
       </div>

@@ -3,11 +3,10 @@
 // import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { GoAlert } from "react-icons/go";
-import ReloadButton from "features/ui/button/ReloadButton";
 import WordList from "entities/WordList/ui/WordList";
 import Spinner from "shared/ui/Spinner/Spinner";
 import Form from "widgets/SearchForm/Form";
+import ErrorAlert from "widgets/ErrorAlert/ErrorAlert";
 import RecentSearchHistory from "widgets/SearchForm/RecentSearchHistory";
 
 export default function Search() {
@@ -15,6 +14,7 @@ export default function Search() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSearchButton, setIsSearchButton] = useState(false);
+  const [dataApi, setDataApi] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -29,26 +29,27 @@ export default function Search() {
   }, [saveWord]);
 
   function handleSearchHistory(word: string) {
+    console.log(word);
     setQuery(word);
+    setIsSearchButton(true);
   }
 
-  const [queryData, setQueryData] = useState(""); // 사용자가 입력한 검색어를 관리하는 상태
-  const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
-
-  const [dataApi, setDataApi] = useState(null);
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (query: string) => {
       setLoading(true); // 데이터 요청 전 로딩 시작
       try {
-        const response = await fetch(`https://react-server-wangkodok.koyeb.app/get-search?query=${query}`);
-        if (!response.ok) throw new Error('데이터를 가져오는 데 실패했습니다.');
-        
+        console.log(query);
+        const response = await fetch(
+          `https://react-server-wangkodok.koyeb.app/get-search?query=${query}`
+        );
+
+        if (!response.ok) throw new Error("데이터를 가져오는 데 실패했습니다.");
+
         const result = await response.json();
         setDataApi(result); // 데이터 상태 업데이트
         setIsSearchButton(false);
       } catch (error) {
-        console.log(error)
+        console.log(error);
         setError(true); // 에러 상태 업데이트
       } finally {
         setLoading(false); // 로딩 종료
@@ -56,18 +57,16 @@ export default function Search() {
     };
 
     if (isSearchButton) {
-      fetchData();
+      fetchData(query);
     }
-  }, [isSearchButton]);
+  }, [query, isSearchButton]);
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
       <div className="rounded-xl">
         <Form
+          query={query}
           setQuery={setQuery}
-          setQueryData={setQueryData}
-          // handleSubmit={handleSubmit}
-          queryData={queryData}
           setIsSearchButton={setIsSearchButton}
         />
 
@@ -75,37 +74,15 @@ export default function Search() {
           <Spinner loading={loading} />
         ) : (
           <>
-          {dataApi !== null ? <RecentSearchHistory
-              // loading={loading}
-              handleSearchHistory={handleSearchHistory}
-            /> : null}
-            
+            {dataApi !== null ? (
+              <RecentSearchHistory handleSearchHistory={handleSearchHistory} />
+            ) : null}
+
             <WordList dataApi={dataApi} />
-            {/* {data === "ㅅㄷㄴㅅ" ? null : <WordList dataApi={dataApi} />} */}
           </>
         )}
-        {/* {query !== "" && loading === true ? (
-          <Spinner loading={loading} />
-        ) : (
-          <>
-            <RecentSearchHistory
-              loading={loading}
-              handleSearchHistory={handleSearchHistory}
-            />
-            {data === "ㅅㄷㄴㅅ" ? null : <WordList dataApi={dataApi} />}
-          </>
-        )} */}
       </div>
-      {error === true ? (
-        <div className="text-center">
-          <GoAlert className="w-full mb-5" size={32} color="#000" />
-          <p className="mb-5">
-            외부 서버에서 데이터를 불러오지 못했습니다. <br /> 아래의 버튼을
-            클릭 후 다시 시도해 주세요.
-          </p>
-          <ReloadButton>다시 시도하기</ReloadButton>
-        </div>
-      ) : null}
+      {error && <ErrorAlert />}
     </div>
   );
 }
