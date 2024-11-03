@@ -48,6 +48,7 @@ export default function Search() {
         if (!response.ok) throw new Error("데이터를 가져오는 데 실패했습니다.");
 
         const result = await response.json();
+        console.log(result.message);
         setDataApi(result); // 데이터 상태 업데이트
         setIsSearchButton(false);
       } catch (error) {
