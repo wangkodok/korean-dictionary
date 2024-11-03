@@ -41,7 +41,8 @@ export default function Search() {
         console.log(query);
         const response = await fetch(
           // `https://react-server-wangkodok.koyeb.app/get-search?query=${query}`
-          `/api/search.do?key=2F1FD2DE79F04A47AF6C6C002898B654&type_search=search&req_type=json&q=${query}`
+          // `/api/search.do?key=2F1FD2DE79F04A47AF6C6C002898B654&type_search=search&req_type=json&q=${query}`
+          "/api/hello"
         );
 
         if (!response.ok) throw new Error("데이터를 가져오는 데 실패했습니다.");
