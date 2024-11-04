@@ -7,6 +7,11 @@ import Form from "widgets/SearchForm/Form";
 import ErrorAlert from "widgets/ErrorAlert/ErrorAlert";
 import RecentSearchHistory from "widgets/SearchForm/RecentSearchHistory";
 
+const baseURL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8000" // replace with your local server port
+    : "https://react-server-wangkodok.koyeb.app/api/data"; // deployed URL
+
 export default function Search() {
   const [query, setQuery] = useState("");
   const [error, setError] = useState(false);
@@ -37,12 +42,9 @@ export default function Search() {
       setLoading(true);
       const fetchDataFromServer = async () => {
         try {
-          const response = await axios.post(
-            "https://react-server-wangkodok.koyeb.app/api/data",
-            {
-              query,
-            }
-          );
+          const response = await axios.post(`${baseURL}/api/data`, {
+            query,
+          });
           setDataApi(response.data);
         } catch (err) {
           setError(true);
