@@ -2,12 +2,12 @@ import { useDispatch } from "react-redux";
 import Button from "shared/ui/button";
 
 export default function WordSearchButton({
+  query,
   setQuery,
-  queryData,
   children,
 }: {
+  query: string;
   setQuery: (query: string) => void;
-  queryData: string;
   children: React.ReactNode;
 }) {
   const dispatch = useDispatch();
@@ -19,10 +19,10 @@ export default function WordSearchButton({
       onClick={() => {
         dispatch({
           type: "word-history-add",
-          wordHistory: { word: queryData },
+          wordHistory: { word: query },
         });
 
-        setQuery(queryData);
+        setQuery(query);
       }}
     >
       {children}

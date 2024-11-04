@@ -1,19 +1,20 @@
 import axios from "axios";
 // import { instance } from "../../../app/api/api";
-import React from "react";
+// import React from "react";
 import { useEffect, useState } from "react";
-import { GoAlert } from "react-icons/go";
 import { useSelector, useDispatch } from "react-redux";
-import ReloadButton from "../../../features/ui/button/ReloadButton";
-import WordList from "../../../entities/WordList/ui/WordList";
-import Spinner from "../../../shared/ui/Spinner/Spinner";
-import Form from "../../../widgets/SearchForm/Form";
-import RecentSearchHistory from "../../../widgets/SearchForm/RecentSearchHistory";
+import WordList from "entities/WordList/ui/WordList";
+import Spinner from "shared/ui/Spinner/Spinner";
+import Form from "widgets/SearchForm/Form";
+import ErrorAlert from "widgets/ErrorAlert/ErrorAlert";
+import RecentSearchHistory from "widgets/SearchForm/RecentSearchHistory";
 
 export default function Search() {
   const [query, setQuery] = useState("");
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isSearchButton, setIsSearchButton] = useState(false);
+  const [dataApi, setDataApi] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -28,82 +29,108 @@ export default function Search() {
   }, [saveWord]);
 
   function handleSearchHistory(word: string) {
+    console.log(word);
     setQuery(word);
+    setIsSearchButton(true);
   }
 
-  const [queryData, setQueryData] = useState(""); // 사용자가 입력한 검색어를 관리하는 상태
-  const [data, setData] = useState(null); // 서버로부터 받은 데이터를 저장하는 상태
-  // const [error_, setError_] = useState(null); // 오류 메시지를 저장하는 상태
+  // useEffect(() => {
+  //   const fetchData = async (query: string) => {
+  //     setLoading(true); // 데이터 요청 전 로딩 시작
+  //     try {
+  //       console.log(query);
+  //       const response = await fetch(
+  //         `https://react-server-wangkodok.koyeb.app/get-search?query=${query}`
+  //       );
 
-  // async function handleSubmit(e: React.FormEvent) {
-  //   e.preventDefault();
-  //   setLoading(true); // 스피너 start
+  //       if (!response.ok) throw new Error("데이터를 가져오는 데 실패했습니다.");
 
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8000/get-search?query=${query}`
-  //     );
-  //     setData(response.data); // 결과를 상태에 저장
-  //     setLoading(false); // 스피너 start
-  //   } catch (error) {
-  //     console.error("Error fetching search result:", error);
+  //       const result = await response.json();
+  //       console.log(result.message);
+  //       setDataApi(result); // 데이터 상태 업데이트
+  //       setIsSearchButton(false);
+  //     } catch (error) {
+  //       console.log(error);
+  //       setError(true); // 에러 상태 업데이트
+  //     } finally {
+  //       setLoading(false); // 로딩 종료
+  //     }
+  //   };
+
+  //   if (isSearchButton) {
+  //     fetchData(query);
   //   }
-  // }
-  // console.log(data);
+  // }, [query, isSearchButton]);
 
-  const [dataApi, setDataApi] = useState(null);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setError(null); // 이전 오류 초기화
+  // };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true); // 데이터 요청 전 로딩 시작
-      try {
-        const response = await fetch(`https://react-server-wangkodok.koyeb.app/get-search?query=${query}`);
-        if (!response.ok) throw new Error('데이터를 가져오는 데 실패했습니다.');
-        
-        const result = await response.json();
-        setDataApi(result); // 데이터 상태 업데이트
-      } catch (error) {
-        // setError(error.message); // 에러 상태 업데이트
-      } finally {
-        setLoading(false); // 로딩 종료
-      }
-    };
+    if (isSearchButton) {
+      setLoading(true);
+      const fetchDataFromServer = async () => {
+        try {
+          const response = await axios.post(
+            "https://react-server-wangkodok.koyeb.app/api/data",
+            {
+              query,
+            }
+          );
+          setDataApi(response.data); // 서버에서 받은 데이터
+        } catch (err) {
+          // setError("데이터를 가져오는 데 실패했습니다.");
+        } finally {
+          setIsSearchButton(false); // 요청 후 fetchData 초기화
+          setLoading(false);
+        }
+      };
 
-    fetchData();
-  }, [query]);
+      fetchDataFromServer();
+    }
+  }, [isSearchButton]);
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   // setError(null); // 이전 오류 초기화
+
+  //   try {
+  //     const response = await axios.post("http://localhost:8000/api/data", {
+  //       query,
+  //     });
+  //     setDataApi(response.data); // 서버에서 받은 데이터
+  //   } catch (err) {
+  //     // setError("데이터를 가져오는 데 실패했습니다.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   return (
     <div className="relative top-[-2.5rem] p-0 px-[1rem] sm:px-[4rem] md:px-[8rem] lg:px-[16rem] xl:px-[20rem]">
       <div className="rounded-xl">
         <Form
+          query={query}
           setQuery={setQuery}
-          setQueryData={setQueryData}
           // handleSubmit={handleSubmit}
-          queryData={queryData}
+          setIsSearchButton={setIsSearchButton}
         />
 
-        {query !== "" && loading === true ? (
+        {loading ? (
           <Spinner loading={loading} />
         ) : (
           <>
-            <RecentSearchHistory
-              loading={loading}
-              handleSearchHistory={handleSearchHistory}
-            />
-            {data === "ㅅㄷㄴㅅ" ? null : <WordList dataApi={dataApi} />}
+            {dataApi !== null ? (
+              <RecentSearchHistory handleSearchHistory={handleSearchHistory} />
+            ) : null}
+
+            <WordList dataApi={dataApi} />
           </>
         )}
       </div>
-      {error === true ? (
-        <div className="text-center">
-          <GoAlert className="w-full mb-5" size={32} color="#000" />
-          <p className="mb-5">
-            외부 서버에서 데이터를 불러오지 못했습니다. <br /> 아래의 버튼을
-            클릭 후 다시 시도해 주세요.
-          </p>
-          <ReloadButton>다시 시도하기</ReloadButton>
-        </div>
-      ) : null}
+      {error && <ErrorAlert />}
     </div>
   );
 }
