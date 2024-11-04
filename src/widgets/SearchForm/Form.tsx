@@ -8,9 +8,9 @@ export default function Form({
   setQuery,
   // setQueryData,
   // handleSubmit,
-  // queryData,
   setIsSearchButton,
-}: {
+}: // queryData,
+{
   query: string;
   setQuery: (query: string) => void;
   // setQueryData: (value: string) => void;
