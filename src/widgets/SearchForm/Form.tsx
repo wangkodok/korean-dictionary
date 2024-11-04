@@ -1,28 +1,19 @@
-// import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import WordSearchButton from "../../features/ui/button/WordSearchButton";
-import React from "react";
 
 export default function Form({
   query,
   setQuery,
-  // setQueryData,
-  // handleSubmit,
   setIsSearchButton,
-}: // queryData,
-{
+}: {
   query: string;
   setQuery: (query: string) => void;
-  // setQueryData: (value: string) => void;
-  // handleSubmit: (e: React.FormEvent) => void; // 인자 없는 형태로 정의
-  // queryData: string;
   setIsSearchButton: (value: boolean) => void;
 }) {
   return (
     <form
       className="bg-slate-100 shadow-lg shadow-slate-300/50 rounded-xl"
       action="#"
-      // onSubmit={handleSubmit}
       onSubmit={(e) => {
         e.preventDefault();
         setIsSearchButton(true);
